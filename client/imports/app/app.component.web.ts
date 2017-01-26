@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import style from './app.component.scss';
+import style from '../scss/app.scss';
 import template from './app.component.web.html';
 import {InjectUser} from "angular2-meteor-accounts-ui";
 

@@ -1,12 +1,6 @@
-@import '../node_modules/@angular/material/core/theming/all-theme';
-@import "imports/app/mobile/ionic.scss";
-
-@include md-core();
-$app-primary: md-palette($md-light-blue, 500, 100, 700);
-$app-accent:  md-palette($md-pink, A200, A100, A400);
-$app-warn:    md-palette($md-red);
-$app-theme: md-light-theme($app-primary, $app-accent, $app-warn);
-@include angular-material-theme($app-theme);
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./imports/scss/variable";
+//@import "imports/app/mobile/ionic.scss";
 
 .fill-remaining-space {
   flex: 1 1 auto;
@@ -14,7 +8,7 @@ $app-theme: md-light-theme($app-primary, $app-accent, $app-warn);
 
 body {
   background-color: #f8f8f8;
-  font-family: 'Muli', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -28,13 +22,4 @@ body.web {
   position: initial;
 }
 
-.sebm-google-map-container {
-  width: 450px;
-  height: 450px;
-}
-
-.md-whiteframe-z2 {
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-}
-
-@import "./imports/material-layout";
+@import "./imports/scss/responsive";

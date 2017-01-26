@@ -11,9 +11,7 @@ import { routes, ROUTES_PROVIDERS } from './app.routes';
 import { PRODUCTS_DECLARATIONS } from "./products/index";
 import { PARTIES_DECLARATIONS } from './parties';
 import { SHARED_DECLARATIONS } from './shared';
-import { MaterialModule } from "@angular/material";
 import { AUTH_DECLARATIONS } from "./auth/index";
-import { FileDropModule } from "angular2-file-drop";
 import { MOBILE_DECLARATIONS } from "./mobile/index";
 import { AppMobileComponent } from "./mobile/app.component.mobile";
 import { IonicModule, IonicApp } from "ionic-angular";
@@ -52,9 +50,7 @@ else {
       Ng2PaginationModule,
       AgmCoreModule.forRoot({
         apiKey: 'AIzaSyAWoBdZHCNh5R-hB5S5ZZ2oeoYyfdDgniA'
-      }),
-      MaterialModule.forRoot(),
-      FileDropModule
+      })
     ],
     declarations: [
       AppComponent,
