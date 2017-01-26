@@ -8,6 +8,7 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { AppComponent } from "./app.component.web";
 import { routes, ROUTES_PROVIDERS } from './app.routes';
+import { PRODUCTS_DECLARATIONS } from "./products/index";
 import { PARTIES_DECLARATIONS } from './parties';
 import { SHARED_DECLARATIONS } from './shared';
 import { MaterialModule } from "@angular/material";
@@ -57,6 +58,7 @@ else {
     ],
     declarations: [
       AppComponent,
+      ...PRODUCTS_DECLARATIONS,
       ...PARTIES_DECLARATIONS,
       ...SHARED_DECLARATIONS,
       ...AUTH_DECLARATIONS

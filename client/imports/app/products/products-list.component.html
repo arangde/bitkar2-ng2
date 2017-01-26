@@ -1,0 +1,275 @@
+<div class="breadcrumb-color meet-team">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <ol class="breadcrumb">
+          <li>
+            <a href="#/">Home</a>
+          </li>
+          <li class="active">Store</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="content-search">
+        <form id="frm_filter" class="form-inline">
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <input type="text" class="search-query" placeholder="What part do you want?" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <select class="search-query" placeholder="Year">
+                <option value="">- Year -</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <select class="search-query" placeholder="Make">
+                <option value="">- Make -</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <select class="search-query" placeholder="Model">
+                <option value="">- Model -</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <select class="search-query" placeholder="Engine">
+                <option value="">- Engine -</option>
+              </select>
+            </div>
+            <div class="col-md-2 text-right">
+              <a href="javascript:;" class="btn btn-primary">Search</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="content-filter">
+              <div class="col-md-4">
+                <select class="search-query">
+                  <option value="" selected>Sort by price</option>
+                  <option value="1">Low to High</option>
+                  <option value="2">High to Low</option>
+                  <option value="3">None</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <select class="search-query">
+                  <option value="" selected>Filter by vendor</option>
+                </select>
+              </div>
+              <div class="hide col-md-4">
+                <select class="search-query">
+                  <option value="" selected>Filter by shipping</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-lg-12">
+      <div class="group filter-button-top">
+        <p class="filter-text">Categories</p>
+        <ul class="filter group albumFilter category-filter">
+          <li class="all-keywords active">All</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-12">
+      <div class="group filter-button-top">
+        <p class="filter-text">Brands</p>
+        <ul class="filter group albumFilter brand-filter">
+          <li class="all-brands active">All</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="products_wrapper">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="search-notify">
+          <p class="info">Searching... Please wait.</p>
+        </div>
+        <div class="search-notify">
+          <p class="error">No products were found</p>
+        </div>
+
+        <div id="videos_wrapper" class="shop-prod">
+          <div class="row">
+            <div class="col-sm-5"><h1 class="section-title">Repair Videos:</h1></div>
+            <div class="col-sm-7">
+              <div class="search-notify">
+                <p class="info">
+                  <span >Over </span>
+                  <b id="videos_counter"></b> Auto Parts Videos Found
+                </p>
+              </div>
+            </div>
+          </div>
+          <ul class="row nav-pills nav-stacked product-list video-list">
+            <li class="col-md-2 col-sm-12 my-shop-animation product-item video-item">
+              <a href="" target="_blank">
+                <div class="shop-img video-img">
+                  <img alt="video.title" src=""/>
+                </div>
+              </a>
+              <div class="col-lg-12 col-md-12 bt12-detail-shop">
+                <div class="bt-detail-shop">
+                  video.title
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div>
+            <div class="row">
+              <div class="col-md-12 store-down-bottom">
+                <button class="btn btn-lg btn-primary" >Previous</button>
+                <button class="btn btn-lg btn-primary" >Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="shop-prod">
+          <div class="row">
+            <div class="col-sm-5"><h1 class="section-title">Parts Results:</h1></div>
+            <div class="col-sm-5">
+              <div class="search-notify">
+                <p class="info"><b id="products_counter"></b> Parts Found</p>
+              </div>
+            </div>
+            <div class="col-sm-2 text-right">
+              <div class="view-mode">
+                <a href="javascript:;" ng-click="productsList.viewChanged('box', $event)" class="active mod-box"><i class="fa fa-th"></i></a>
+                <a href="javascript:;" ng-click="productsList.viewChanged('list', $event)" class="mod-list"><i class="fa fa-list"></i></a>
+              </div>
+            </div>
+          </div>
+          <ul class="nav-pills nav-stacked product-list box-view row">
+            <li class="col-md-1_5 col-sm-12 my-shop-animation product-item" id="product_$index">
+              <a href="product.viewItemURL">
+                <div class="shop-img product.vendor">
+                  <img alt="product.title" src="product.galleryURL" image-resize />
+                </div>
+              </a>
+              <div class="col-lg-12 col-md-12 bt12-detail-shop">
+                <div class="bt-detail-shop">
+                  <a class="title" href="product.viewItemURL"> product.title </a>
+                  <p class="shop-price">product.price | currency:"$":2</p>
+                </div>
+              </div>
+              <div class="col-lg-6 bt-content-shop">
+                <a class="btn btn-lg btn-primary" target="_blank" href="product.viewItemURL">
+                  <i class="fa fa-shopping-cart"></i> BUY NOW
+                </a>
+              </div>
+              <div class="col-lg-6 bt-content-shop">
+                <a class="btn btn-lg btn-primary pull-right" href="/products/ product.vendor /product.seoURL/ product.itemId /"><i class="fa fa-list"></i>Details</a>
+              </div>
+              <div class="clear"></div>
+            </li>
+          </ul>
+          <ul class="nav-pills nav-stacked product-list list-view hide">
+            <li class="list-view-header">
+              <div class="row">
+                <div class="col-lg-2 col-md-3">
+                  <span></span>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                  <span>Vendor</span>
+                </div>
+                <div class="col-lg-4 col-md-3">
+                  <span>Product</span>
+                </div>
+                <div class="col-lg-1 col-md-1">
+                  <span>Shipping</span>
+                </div>
+                <div class="col-lg-1 col-md-1">
+                  <span>Price</span>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                  <span></span>
+                </div>
+              </div>
+            </li>
+            <li dir-paginate="product in productsList.products | itemsPerPage: productsList.perPage" total-items="productsList.productsCount" class="my-shop-animation">
+              <div class="row">
+                <div class="col-lg-2 col-md-3">
+                  <a href="product.viewItemURL">
+                    <div class="shop-img">
+                      <img ng-src="product.galleryURL" alt="product.title" />
+                    </div>
+                  </a>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                  <p class="vendor-icon">
+                    <span class="vendor-product.vendor"></span>
+                  </p>
+                </div>
+                <div class="col-lg-4 col-md-3 bt12-detail-shop">
+                  <div class="bt-detail-shop">
+                    <a class="title" href="product.viewItemURL"> product.title </a>
+                    <p class="">product.subtitle</p>
+                  </div>
+                </div>
+                <div class="col-lg-1 col-md-1">
+                  <p class="shop-price">
+                    <span ng-if="product.shippingInfo.shippingType" class="shipping">product.shippingInfo.shippingType</span>
+                  </p>
+                </div>
+                <div class="col-lg-1 col-md-1">
+                  <p class="shop-price">
+                    <span class="price-small">product.price | currency:"$":2</span>
+                  </p>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                  <div class="bt-content-actions">
+                    <a class="btn btn-lg btn-primary" target="_blank" href="product.viewItemURL"><i class="fa fa-shopping-cart"></i> BUY NOW</a><br/>
+                    <a class="btn btn-lg btn-primary" href="/products/ product.vendor /product.seoURL/ product.itemId /"><i class="fa fa-list"></i> Details</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!--Pagination-->
+      <div class="store-pagination row">
+        <div ng-if="productsList.numberOfPages > 1 && !productsList.searching">
+          <div class="col-md-6">
+            <p class="number-page">
+              Showing 1 to of productsList.productsCount products
+            </p>
+          </div>
+          <div class="col-md-6 store-down-bottom">
+            <ul>
+              <li>
+                <button class="btn btn-lg btn-primary" ng-disabled="productsList.page == 1" ng-click="productsList.pageChanged(productsList.page-1)">
+                  Previous
+                </button>
+              </li>
+              <li>
+                <p class="number-page">productsList.page / productsList.numberOfPages</p>
+              </li>
+              <li>
+                <button class="btn btn-lg btn-primary" ng-disabled="productsList.page >= productsList.productsCount/productsList.perPage" ng-click="productsList.pageChanged(productsList.page+1)">
+                  Next
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
