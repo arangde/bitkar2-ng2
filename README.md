@@ -1,10 +1,5 @@
-[{]: <region> (header)
 # Bitkar v2.0 Meteor-Angular2
-[}]: #
-[{]: <region> (body)
-[![bitHound Overall Score](https://www.bithound.io/github/Urigo/meteor-angular2.0-socially/badges/score.svg)](https://www.bithound.io/github/Urigo/meteor-angular2.0-socially) [![bitHound Dependencies](https://www.bithound.io/github/Urigo/meteor-angular2.0-socially/badges/dependencies.svg)](https://www.bithound.io/github/Urigo/meteor-angular2.0-socially/master/dependencies/npm)
 
-- [Start the tutorial @ angular-meteor.com](https://www.angular-meteor.com/tutorials/socially/angular2/bootstrapping)
 
 This tutorial serves as a comprehensive introduction to writing applications with Meteor and Angular.
 
@@ -27,7 +22,6 @@ We also welcome pull requests for new chapters and new screencast recordings of 
 
 Lets start!
 
-[}]: #
 [{]: <region> (footer)
 [{]: <helper> (nav_step)
 | [Begin Tutorial >](manuals/views/step1.md) |
