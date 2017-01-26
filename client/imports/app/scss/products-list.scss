@@ -1,0 +1,904 @@
+@import "variable";
+
+/********************************************************************************************
+    PAGE SHOPPING GENERAL OBJECT
+*********************************************************************************************/
+.breadcrumb-color.meet-team {
+  margin-bottom: 0px;
+}
+.search-query {
+  padding: 4px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+select.search-query {
+  padding: 6px 4px;
+}
+#frm_filter a.btn {
+  background: $base-color;
+  font-size: 13px;
+  padding: 8px 16px;
+}
+.shop-slide-img_sound {
+  background-repeat: no-repeat !important;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: 450px;
+  position: relative;
+}
+.shopping-top-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 78px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-top: 55px;
+}
+.shopping-topsub-title {
+  text-align: center;
+  font-weight: 300;
+  font-size: 40px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-top: 150px;
+}
+
+.shop-title-store {
+  margin-top: 80px;
+}
+
+.shop-top-img {
+  padding: 0;
+  margin-top: 40px;
+}
+.shop-top-img img {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.shop-top-img figure {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.shop-top-img .col-md-6 {
+  padding-bottom: 30px;
+}
+/*icon number single-product in the cart*/
+.number-prodsingle-cart {
+  position: absolute;
+  z-index: 1000;
+  top: 36px;
+  left: 36px;
+  background-color: #E74C3C;
+  padding: 5px;
+  color: #fff;
+  border-radius: 3px;
+}
+/*icon sale triangle*/
+.onsale {
+  position: absolute;
+  z-index: 1000;
+  top: 36px;
+  right: 36px;
+  text-transform: uppercase;
+  -webkit-backface-visibility: hidden;
+}
+.onsale span {
+  z-index: 10;
+  color: #FFF;
+  position: absolute;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  font-size: 1.36rem;
+  line-height: 0.875rem;
+  right: 2px;
+  top: 14px;
+  letter-spacing: 1px;
+}
+.onsale:after {
+  content: '';
+  position: absolute;
+  border-top: 60px solid #E74C3C;
+  border-right: 0;
+  border-left: 60px solid transparent;
+  right: 0;
+  z-index: 2;
+}
+/*end icon sale*/
+#products_wrapper {
+  min-height: 80px;
+}
+.shop-prod .shop-img{
+  margin: 0 auto 10px auto;
+  width: 100%;
+  text-align: center;
+  padding: 0px 0;
+  background: #fff;
+  position: relative;
+  height: 200px;
+  border:1px solid rgba(0,0,0,0.1);
+  -webkit-transition: all 0.9s ease-out;  /* Chrome 1-25, Safari 3.2+ */
+  -moz-transition: all 0.9s ease-out;  /* Firefox 4-15 */
+  -o-transition: all 0.9s ease-out;  /* Opera 10.50�12.00 */
+  transition: all 0.9s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+}
+.shop-prod .shop-img:after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 60px;
+  height: 18px;
+  right: 0;
+  bottom: 0px;
+}
+.shop-prod .shop-img.ebay:after {
+  height: 18px;
+  background: url('../../../public/images/logo_ebay.png') no-repeat;
+}
+.shop-prod .shop-img.amazon:after {
+  height: 14px;
+  background: url('../../../public/images/logo_amazon.png') no-repeat;
+}
+.shop-prod .shop-img.wheel-drive-hardware:after {
+  width: 60px;
+  height: 32px;
+  background: url('../../../public/images/vendors/4wd-logo.png') no-repeat;
+}
+.shop-prod .shop-img.oscaro-online-auto-parts:after {
+  width: 80px;
+  height: 38px;
+  background: url('../../../public/images/vendors/oscaro-logo.png') no-repeat;
+}
+.shop-prod .shop-img.advance-auto-parts:after {
+  width: 88px;
+  height: 21px;
+  background: url('../../../public/images/vendors/advance.png') no-repeat;
+}
+.shop-prod .shop-img.autobarn-com:after {
+  width: 65px;
+  height: 31px;
+  background: url('../../../public/images/vendors/autobarn.png') no-repeat;
+}
+.shop-prod .shop-img.banggood-cj-affiliate-program:after {
+  width: 80px;
+  height: 22px;
+  background: url('../../../public/images/vendors/banggood.jpg') no-repeat;
+}
+.shop-prod .shop-img.buyautoparts-com:after {
+  width: 110px;
+  height: 17px;
+  background: url('../../../public/images/vendors/buyautoparts.jpg') no-repeat;
+}
+.shop-prod .shop-img.eeuroparts-com:after {
+  width: 85px;
+  height: 16px;
+  background: url('../../../public/images/vendors/eeuroparts.png') no-repeat;
+}
+.shop-prod .shop-img.sixity-powersports-and-auto-parts:after {
+  width: 42px;
+  height: 42px;
+  background: url('../../../public/images/vendors/sixity-auto-parts.png') no-repeat;
+}
+.shop-prod .shop-img.jc-whitney:after {
+  width: 91px;
+  height: 18px;
+  background: url('../../../public/images/vendors/jcwhitney.png') no-repeat;
+}
+.shop-prod .shop-img.auto-parts-warehouse:after {
+  width: 90px;
+  height: 22px;
+  background: url('../../../public/images/vendors/apw-logo.png') no-repeat;
+}
+.shop-prod .shop-img.aliexpress-by-alibaba-com:after {
+  width: 100px;
+  height: 19px;
+  background: url('../../../public/images/vendors/ali-express.png') no-repeat;
+}
+.shop-prod .shop-img.autozone:after {
+  width: 118px;
+  height: 16px;
+  background: url('../../../public/images/vendors/autozone.png') no-repeat;
+}
+.shop-prod ul.nav-pills li {
+  padding-bottom: 25px;
+  margin: 0px 0 0;
+  display: inline-block;
+  min-height: 350px;
+  vertical-align: top;
+  border-right: 0px solid #ccc;
+}
+
+.shop-prod ul.nav-pills.box-view li {
+  .btn-lg {
+    width: 100%;
+    padding: 10px 12px;
+    @media (min-width: 992px) {
+      padding: 9px 0px;
+    }
+    @media (min-width: 1200px) {
+      width: 99%;
+    }
+  }
+}
+
+.shop-prod .shop-img.show-up {
+  box-shadow: 0 20px 22px #888;
+}
+.shop-prod ul.nav-pills li:hover .shop-img {
+  box-shadow: 0 20px 22px #888;
+}
+
+.shop-prod ul.nav-pills li.show-up .shop-img {
+  box-shadow: 0 20px 22px #888;
+}
+.shop-prod ul.nav-pills li img {
+  width: auto;
+  height: auto;
+  max-height: 90%;
+  max-width: 90%;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+.onsale-prod {
+  position: absolute;
+  z-index: 1000;
+  top: 15px;
+  right: 5px;
+  text-transform: uppercase;
+  -webkit-backface-visibility: hidden;
+}
+.onsale-prod span {
+  z-index: 10;
+  color: #FFF;
+  font-size: 1.36rem;
+  line-height: 0.875rem;
+  letter-spacing: 1px;
+  background: #E74C3C;
+  padding: 12px 6px;
+  border-radius: 100%;
+}
+.shop-img .fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  opacity: 0;
+  filter: alpha(opacity=0);
+
+}
+.shop-img .fade:hover {
+  filter: alpha(opacity=100);
+  opacity: 1;
+}
+
+.bt-content-shop {
+  padding: 0;
+}
+.bt-content-shop i{
+  margin-right: 4px;
+}
+.shop-prod ul.nav-pills li {
+  margin-bottom: 40px;
+  border-right: 0px solid #ccc;
+}
+.product-list {
+  padding: 0;
+}
+.product-list.list-view {
+  padding-top:20px;
+}
+.shop-price {
+  margin-top: 0px;
+  font-size: 14px;
+  margin-bottom: 1px;
+  text-align: right;
+  color: $text-color;
+}
+.shop-price >span{
+  padding-right: 10px;
+}
+.vendor-icon {
+  margin-top:5px;
+}
+.vendor-icon >span{
+  width: 60px;
+  display: inline-block;
+}
+.vendor-icon .vendor-ebay{
+  height: 18px;
+  background: url('../../../public/images/logo_ebay.png') no-repeat;
+}
+.vendor-icon .vendor-amazon{
+  height: 14px;
+  background: url('../../../public/images/logo_amazon.png') no-repeat;
+}
+.vendor-icon .vendor-wheel-drive-hardware {
+  width: 60px;
+  height: 32px;
+  background: url('../../../public/images/vendors/4wd-logo.png') no-repeat;
+}
+.vendor-icon .vendor-advance-auto-parts {
+  width: 88px;
+  height: 21px;
+  background: url('../../../public/images/vendors/advance.png') no-repeat;
+}
+.vendor-icon .vendor-autobarn-com {
+  width: 65px;
+  height: 31px;
+  background: url('../../../public/images/vendors/autobarn.png') no-repeat;
+}
+.vendor-icon .vendor-banggood-cj-affiliate-program {
+  width: 80px;
+  height: 22px;
+  background: url('../../../public/images/vendors/banggood.jpg') no-repeat;
+}
+.vendor-icon .vendor-buyautoparts-com {
+  width: 110px;
+  height: 17px;
+  background: url('../../../public/images/vendors/buyautoparts.jpg') no-repeat;
+}
+.vendor-icon .vendor-eeuroparts-com {
+  width: 85px;
+  height: 16px;
+  background: url('../../../public/images/vendors/eeuroparts.png') no-repeat;
+}
+.vendor-icon .vendor-sixity-powersports-and-auto-parts {
+  width: 42px;
+  height: 42px;
+  background: url('../../../public/images/vendors/sixity-auto-parts.png') no-repeat;
+}
+.vendor-icon .vendor-jc-whitney {
+  width: 91px;
+  height: 18px;
+  background: url('../../../public/images/vendors/jcwhitney.png') no-repeat;
+}
+.vendor-icon .vendor-auto-parts-warehouse {
+  width: 90px;
+  height: 22px;
+  background: url('../../../public/images/vendors/apw-logo.png') no-repeat;
+}
+.vendor-icon .vendor-aliexpress-by-alibaba-com {
+  width: 100px;
+  height: 19px;
+  background: url('../../../public/images/vendors/ali-express.png') no-repeat;
+}
+.vendor-icon .vendor-autozone {
+  width: 118px;
+  height: 16px;
+  background: url('../../../public/images/vendors/autozone.png') no-repeat;
+}
+.vendor-icon .vendor-oscaro-online-auto-parts {
+  width: 80px;
+  height: 38px;
+  background: url('../../../public/images/vendors/oscaro-logo.png') no-repeat;
+}
+.bt12-detail-shop {
+  margin-bottom: 20px;
+  padding: 0;
+}
+.bt-detail-shop {
+  border-bottom: 1px solid #ccc;
+  padding: 0;
+  width: 100%;
+  float: left;
+}
+.bt-detail-shop a.title {
+  float: left;
+}
+.store-cart-footer {
+  width: 100%;
+  float: left;
+  margin-top: 40px;
+}
+.store-down-bottom {
+  text-align: right;
+}
+.store-down-bottom ul li {
+  display: inline-block;
+}
+.store-down-bottom ul {
+  margin-bottom: 0;
+  padding: 0 10px 0 0;
+}
+.content-count-cart {
+  margin-bottom: 10px;
+}
+.content-search {
+  padding-bottom: 0px;
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+.content-search .filter {
+  margin: 0;
+  color: #777;
+  text-align: left;
+  padding: 0;
+  float: left;
+}
+.content-search i{
+  background: #21252b;
+  color: #fff;
+  padding: 12px 12px 13px 12px;
+  font-size: 18px;
+  border-radius: 1px;
+  margin-right: 10px;
+}
+.content-search a {
+  color: #fff;
+  font-size: 14px;
+  padding: 12px 12px 12px 0;
+  background: $text-color;
+}
+.content-filter {
+  margin-top: 10px;
+}
+.btn-primary:disabled, .btn-primary[disabled] {
+  letter-spacing: 0.04em;
+}
+.btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  background: $base-color;
+  border: 1px solid $dark-color;
+}
+.number-page {
+  padding: 0 10px;
+}
+/*-----------------------------------------*/
+/***** Effect hover images Layla *****/
+/*-----------------------------------------*/
+
+.grid figure {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+.grid figure img {
+  position: relative;
+  display: block;
+  min-height: 100%;
+  max-width: 100%;
+  opacity: 1;
+}
+.grid figure figcaption {
+  padding: 2em;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1.25em;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.grid figure figcaption::before,
+.grid figure figcaption::after {
+  pointer-events: none;
+}
+
+.grid figure figcaption,
+.grid figure figcaption > a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+/* Anchor will cover the whole item by default */
+/* For some effects it will show as a button */
+.grid figure figcaption > a {
+  z-index: 1000;
+  text-indent: 200%;
+  white-space: nowrap;
+  font-size: 0;
+  opacity: 0;
+}
+
+.grid figure h2 {
+  word-spacing: -0.15em;
+  font-weight: 300;
+  font-size: 25px;
+}
+
+.grid figure h2 span {
+  font-weight: 800;
+}
+
+.grid figure h2,
+.grid figure p {
+  margin: 0;
+  color: #ddd;
+}
+
+.grid figure p {
+  letter-spacing: 1px;
+  font-size: 68.5%;
+}
+figure.effect-layla {
+  background: $text-color;
+}
+
+
+figure.effect-layla figcaption::before,
+figure.effect-layla figcaption::after {
+  position: absolute;
+  content: '';
+  opacity: 0;
+}
+
+figure.effect-layla figcaption::before {
+  top: 50px;
+  right: 30px;
+  bottom: 50px;
+  left: 30px;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  -webkit-transform: scale(0,1);
+  transform: scale(0,1);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+
+figure.effect-layla figcaption::after {
+  top: 30px;
+  right: 50px;
+  bottom: 30px;
+  left: 50px;
+  border-right: 1px solid #fff;
+  border-left: 1px solid #fff;
+  -webkit-transform: scale(1,0);
+  transform: scale(1,0);
+  -webkit-transform-origin: 100% 0;
+  transform-origin: 100% 0;
+}
+
+figure.effect-layla h2 {
+  padding-top: 26%;
+  -webkit-transition: -webkit-transform 0.35s;
+  transition: transform 0.35s;
+  border-bottom: 0px;
+}
+
+figure.effect-layla p {
+  padding: 0.5em 2em;
+  text-transform: none;
+  opacity: 0;
+  -webkit-transform: translate3d(0,-10px,0);
+  transform: translate3d(0,-10px,0);
+}
+
+
+figure.effect-layla h2 {
+  -webkit-transform: translate3d(0,-30px,0);
+  transform: translate3d(0,-30px,0);
+}
+
+figure.effect-layla figcaption::before,
+figure.effect-layla figcaption::after,
+figure.effect-layla p {
+  -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+figure.effect-layla:hover img {
+  opacity: 0.7;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+figure.effect-layla:hover figcaption::before,
+figure.effect-layla:hover figcaption::after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+figure.effect-layla:hover h2,
+figure.effect-layla:hover p {
+  opacity: 1;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+figure.effect-layla:hover figcaption::after,
+figure.effect-layla:hover h2,
+figure.effect-layla:hover p,
+figure.effect-layla:hover img {
+  -webkit-transition-delay: 0.15s;
+  transition-delay: 0.15s;
+}
+
+/********************************************************************************************
+    PAGE SHOPPING DRESSES
+*********************************************************************************************/
+.shop-slide-img {
+  //background-image: url('http://placehold.it/1920x1080');
+  background-repeat: no-repeat !important;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: 450px;
+  position: relative;
+}
+.shop-dresses .product-list .title {
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  width: 100%;
+}
+.shop-dresses .product-list .subtitle {
+  color:#6e6e6e;
+  width: 100%;
+}
+.shop-dresses .itemPreview:hover {
+  background-position: -30px center;
+}
+.shop-dresses .itemPreview {
+  position: absolute;
+  width: 30px;
+  height: 16px;
+  overflow: hidden;
+  left: 10px;
+  bottom: 10px;
+  padding: 10px 0;
+  text-indent: -1000px;
+  background-image: url("../../../public/images/store/eye_off_on.png");
+  background-repeat: no-repeat;
+  background-position: 0 center;
+  cursor: pointer;
+}
+.shop-dresses .shop-price {
+  margin-top: 0px;
+  font-size: 14px;
+  margin-bottom: 1px;
+  text-align: left;
+  color: #6e6e6e;
+}
+.shop-dresses .bt-detail-shop {
+  border-bottom: 0px solid #ccc;
+  letter-spacing: 0.1em
+}
+.shop-prod.shop-dresses .shop-img {
+  background: #f7f7f7;
+  margin: 0 auto 40px auto;
+  width: 100%;
+  text-align: center;
+  border:1px solid rgba(0,0,0,0.1);
+  padding: 70px 0;
+  position: relative;
+}
+.shop-dresses .number-prodsingle-cart {
+  background-color: #111;
+}
+.shop-dresses .onsale:after {
+  border-top: 60px solid #111;
+}
+.shop-prod.shop-dresses .shop-img {
+  margin: 0 auto 10px auto;
+}
+
+/*Portfolio*/
+/* Filter */
+p.filter-text {
+  border-bottom: 1px dotted #ccc;
+  font-size: 18px;
+  color: #999;
+}
+.filter{margin:0 auto 10px auto;color: #777; padding:0;}
+.filter li { display: inline-block; list-style: none; margin-right:5px; margin-bottom:5px;}
+.filter li:last-child:after { content: ""; }
+.filter li  {
+  padding: 5px 15px;
+  color: #8e8e8e;
+  text-decoration: none;
+  border:1px solid #dedede;
+}
+.filter li:hover, .current li {
+  background: $base-color;
+  color: #fff;
+  border: 1px solid $base-color;
+}
+.filter li:hover {
+  cursor:pointer;
+}
+.filter .active {
+  color: #fff;
+  border: 1px solid $base-color;
+  background: $base-color;
+}
+.product-list .title {
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: inline-block;
+  height: 46px;
+  overflow: hidden;
+  width: 100%;
+}
+.nav-pills>li>a.btn-lg {
+  border-radius: 2px;
+  padding: 6px 12px;
+}
+
+.filter-dresses{margin:0 auto 30px auto;color: #777; text-align:center;padding:0;}
+.filter-dresses li { display: inline-block; list-style: none; margin-right:5px;}
+.filter-dresses li:last-child:after { content: ""; }
+.filter-dresses li  {
+  padding: 5px 15px;
+  color: #8e8e8e;
+  text-decoration: none;
+  border-bottom:1px solid #dedede;
+}
+.filter-dresses li:hover, .current li { color: #111; border-bottom:1px solid #111;cursor:pointer;}
+.filter-dresses .active {
+  color: #111;
+  border-bottom:1px solid #111;
+}
+
+.content-search.shop-dresses {
+  border: 0px;
+  margin-top: 30px;
+}
+.shop-dress-size span{
+  color: #6e6e6e;
+  margin-right: 5px;
+}
+
+.store-pagination {
+  margin-bottom: 40px;
+}
+.view-mode {
+  text-align: right;
+  padding-bottom: 5px;
+  padding-top: 24px;
+}
+.view-mode >a {
+  font-size: 28px;
+  padding-left: 5px;
+  color: #dddddd;
+}
+.view-mode >a:hover, .view-mode >a.active {
+  color: $base-color;
+}
+
+.shop-prod ul.nav-pills.list-view li {
+  padding: 15px 0 5px;
+  margin: 0px 0 0;
+  display: block;
+  min-height: auto;
+  border-bottom: 1px solid #ccc;
+}
+.shop-prod ul.nav-pills.list-view li .bt-detail-shop {
+  border: none;
+}
+ul.nav-pills.list-view.product-list .title {
+  height: auto;
+}
+ul.nav-pills.list-view.product-list .shop-price {
+  margin-bottom: 10px;
+  text-align: left;
+  .shipping {
+    display: inline-block;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+.shop-prod ul.nav-pills.list-view .shop-img {
+  height: auto;
+}
+.shop-prod ul.nav-pills.list-view .shop-img.show-up img{
+  box-shadow: 0 20px 22px #888;
+}
+.shop-prod ul.nav-pills.list-view li:hover img {
+  box-shadow: 0 20px 22px #888;
+}
+
+.shop-prod ul.nav-pills.list-view li.show-up {
+  box-shadow: 0 20px 22px #888;
+}
+.shop-prod ul.nav-pills.list-view li img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
+  min-width: 140px;
+  box-shadow: 0 2px 2px #888;
+  margin-top: 0;
+  margin-bottom: 0px;
+  -webkit-transition: all 0.9s ease-out;  /* Chrome 1-25, Safari 3.2+ */
+  -moz-transition: all 0.9s ease-out;  /* Firefox 4-15 */
+  -o-transition: all 0.9s ease-out;  /* Opera 10.50�12.00 */
+  transition: all 0.9s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+}
+.search-notify {
+  margin: 0 0 20px 0;
+  .error {
+    color: $alert-color;
+  }
+  .info {
+    color: $base-color;
+    font-size: 20px;
+
+    b {
+      font-size: 52px;
+      line-height: 1.2;
+      padding-right: 10px;
+      color: $text-color;
+    }
+  }
+}
+.bt-content-actions {
+  text-align: right;
+  .btn {
+    margin-bottom: 10px;
+    width: 132px;
+  }
+}
+.list-view-header {
+  span {
+    font-weight: 700;
+    color: $base-color;
+  }
+}
+
+/* video list */
+#videos_wrapper {
+  margin-bottom: 20px;
+}
+
+.shop-prod ul.nav-pills.video-list {
+  padding: 0;
+
+  li.video-item {
+    min-height: 180px;
+    padding-bottom: 15px;
+    margin-bottom: 0px;
+
+    .shop-img.video-img {
+      height: auto;
+      border: none;
+
+      &:after {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: url('../../../public/images/youtube-play.png') no-repeat center;
+        opacity: .7;
+      }
+
+      img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
+        margin-top: 0;
+      }
+    }
+
+    .bt12-detail-shop {
+      margin-bottom: 0;
+
+      .bt-detail-shop {
+        border: none;
+        line-height: 1.4;
+        height: 36px;
+        overflow: hidden;
+      }
+    }
+  }
+}

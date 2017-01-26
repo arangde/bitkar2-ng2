@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PaginationService } from 'ng2-pagination';
 
 import template from './products-list.component.html';
-import style from '../../scss/products-list.scss';
+import style from '../scss/products-list.scss';
 
 @Component({
   selector: 'products-list',

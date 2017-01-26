@@ -2,70 +2,41 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AccountsModule } from 'angular2-meteor-accounts-ui';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { AppComponent } from "./app.component.web";
-import { routes, ROUTES_PROVIDERS } from './app.routes';
-import { PRODUCTS_DECLARATIONS } from "./products/index";
-import { PARTIES_DECLARATIONS } from './parties';
+import { routes } from './app.routes';
 import { SHARED_DECLARATIONS } from './shared';
-import { AUTH_DECLARATIONS } from "./auth/index";
-import { MOBILE_DECLARATIONS } from "./mobile/index";
-import { AppMobileComponent } from "./mobile/app.component.mobile";
-import { IonicModule, IonicApp } from "ionic-angular";
-import { PartiesListMobileComponent } from "./mobile/parties-list.component.mobile";
+import { PRODUCTS_DECLARATIONS } from "./products/index";
+// import { PARTIES_DECLARATIONS } from './parties';
+// import { AUTH_DECLARATIONS } from "./auth/index";
+// import { MOBILE_DECLARATIONS } from "./mobile/index";
+// import { AppMobileComponent } from "./mobile/app.component.mobile";
+// import { IonicModule, IonicApp } from "ionic-angular";
 
-let moduleDefinition;
+let moduleDefinition = {
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes),
+    Ng2PaginationModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAWoBdZHCNh5R-hB5S5ZZ2oeoYyfdDgniA'
+    })
+  ],
+  declarations: [
+    AppComponent,
+    ...PRODUCTS_DECLARATIONS,
+    ...SHARED_DECLARATIONS,
+  ],
+  providers: [
 
-if (Meteor.isCordova) {
-  moduleDefinition = {
-    imports: [
-      Ng2PaginationModule,
-      IonicModule.forRoot(AppMobileComponent)
-    ],
-    declarations: [
-      ...SHARED_DECLARATIONS,
-      ...MOBILE_DECLARATIONS
-    ],
-    providers: [
-    ],
-    bootstrap: [
-      IonicApp
-    ],
-    entryComponents: [
-      PartiesListMobileComponent
-    ]
-  }
-}
-else {
-  moduleDefinition = {
-    imports: [
-      BrowserModule,
-      FormsModule,
-      ReactiveFormsModule,
-      RouterModule.forRoot(routes),
-      AccountsModule,
-      Ng2PaginationModule,
-      AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyAWoBdZHCNh5R-hB5S5ZZ2oeoYyfdDgniA'
-      })
-    ],
-    declarations: [
-      AppComponent,
-      ...PRODUCTS_DECLARATIONS,
-      ...PARTIES_DECLARATIONS,
-      ...SHARED_DECLARATIONS,
-      ...AUTH_DECLARATIONS
-    ],
-    providers: [
-      ...ROUTES_PROVIDERS
-    ],
-    bootstrap: [
-      AppComponent
-    ]
-  }
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 }
 
 @NgModule(moduleDefinition)
