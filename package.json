@@ -1,5 +1,9 @@
 {
-  "name": "angular2-meteor-socially",
+  "name": "bitkar2-angular2-meteor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arangde/bitkar2-ng2.git"
+  },
   "private": true,
   "scripts": {
     "start": "meteor run",

@@ -1,5 +1,5 @@
 [{]: <region> (header)
-# Socially - A Meteor-Angular 2 Tutorial App
+# Bitkar v2.0 Meteor-Angular2
 [}]: #
 [{]: <region> (body)
 [![bitHound Overall Score](https://www.bithound.io/github/Urigo/meteor-angular2.0-socially/badges/score.svg)](https://www.bithound.io/github/Urigo/meteor-angular2.0-socially) [![bitHound Dependencies](https://www.bithound.io/github/Urigo/meteor-angular2.0-socially/badges/dependencies.svg)](https://www.bithound.io/github/Urigo/meteor-angular2.0-socially/master/dependencies/npm)
