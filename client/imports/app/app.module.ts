@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
-import { AppComponent } from "./app.component.web";
+import { AppComponent } from "./app.component";
 import { routes } from './app.routes';
 import { SHARED_DECLARATIONS } from './shared';
 import { PRODUCTS_DECLARATIONS } from "./products/index";
