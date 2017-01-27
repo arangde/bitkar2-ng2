@@ -26,7 +26,7 @@
     "angular2-meteor-accounts-ui": "1.0.0",
     "angular2-meteor-polyfills": "^0.1.1",
     "angular2-meteor-tests-polyfills": "0.0.2",
-    "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap": "^3.3.7",
     "gm": "1.23.0",
     "ionic-angular": "2.0.0-rc.1",
     "ionic-selector": "0.0.2",

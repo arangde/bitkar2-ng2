@@ -8,7 +8,7 @@ import { MeteorObservable } from 'meteor-rxjs';
 import 'rxjs/add/operator/map';
 
 import template from './product-details.component.html';
-import style from '../scss/product-details.scss';
+import style from '../less/product-details.less';
 
 @Component({
   selector: 'product-details',

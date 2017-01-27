@@ -1,0 +1,268 @@
+@import "../node_modules/bootstrap/less/bootstrap";
+@import "./imports/app/less/variable";
+//@import "./imports/app/mobile/ionic.less";
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+html, body {
+  height: 100%;
+}
+
+html * {
+  outline: 0 !important;
+  font-family: 'Open Sans',sans-serif;
+}
+
+body {
+  padding-top: 70px;
+  padding-bottom: 20px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height:22px;
+  color: @text-color;
+  background-color: #f8f8f8;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+body.mobile {
+  overflow: hidden;
+}
+
+body.web {
+  overflow: visible;
+  position: initial;
+}
+
+html, body {
+  height: 100%;
+}
+html * {
+  outline: 0 !important;
+}
+body {
+  padding-top: 70px;
+  padding-bottom: 20px;
+  font-family: 'Open sans',sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height:22px;
+  color: @text-color;
+  letter-spacing: 0.04em;
+}
+h1 {
+  font-family: 'Open sans', sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  line-height:20px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+h2 {
+  font-family: 'Open sans', sans-serif;
+  font-weight: 400;
+  margin-bottom: 20px;
+  font-size: 20px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+  margin-top: 0;
+}
+h2 span{
+  padding: 3px 0px;
+  color: #333;
+}
+img {
+  max-width: 100%;
+}
+h3 {
+  font-family: 'Open sans', sans-serif;
+  font-weight: 400;
+}
+h3, .h3 {
+  font-size: 20px;
+}
+h4 {
+  font-family: 'Open sans', sans-serif;
+  font-weight: 700;
+}
+.btn {
+  border-radius:1px;
+}
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+.reveal-animation {
+  top: 0;
+  left: 0;
+}
+.col-md-1_5 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  @media (min-width: 992px) {
+    width: 20%;
+    float: left;
+  }
+}
+
+/*Scroll*/
+.dropdown-prod-cart-scroll {
+  max-height: 500px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+ul.scroll-menu {
+  position: relative;
+  display: inherit !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -moz-overflow-scrolling: touch;
+  -ms-overflow-scrolling: touch;
+  -o-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  margin: 0;
+  border-left: none;
+  border-right: none;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -ms-border-radius: 0 !important;
+  -o-border-radius: 0 !important;
+  border-radius: 0 !important;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -ms-box-shadow: none;
+  -o-box-shadow: none;
+  box-shadow: none;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+/********/
+
+/* General button style (reset) */
+.btn {
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: inline-block;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  letter-spacing: 0.04em;
+}
+
+.btn:after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+
+/* Button 1e */
+.btn-primary {
+  overflow: hidden;
+  z-index: 999;
+}
+
+.btn-primary:after {
+  width: 100%;
+  height: 48%;
+  top: 50%;
+  left: 50%;
+  background:@hover-color;
+  opacity: 0;
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  -moz-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+
+.btn-primary:hover {
+  background: @base-color;
+  border: 1px solid @dark-color;
+}
+.btn-primary:hover:after {
+  height: 400%;
+  opacity: 1;
+}
+.btn-primary {
+  background: @base-color;
+  border: 1px solid @dark-color;
+  color: #fff!important;
+  -webkit-box-shadow: inset 0 1px 0 @border-color;
+  -moz-box-shadow: inset 0 1px 0 @border-color;
+  box-shadow: inset 0 1px 0 @border-color;
+  text-shadow: 0 1px 0 rgba(0,0,0,.1);
+}
+/*.btn-primary:hover {
+    background: @hover-color;
+    border: 1px solid @dark-color;
+}*/
+.btn-lg, .btn-group-lg>.btn {
+  border-radius: 0px;
+}
+
+.sub-title {
+  margin-bottom: 40px;
+}
+.section-title span{
+  font-weight: 300;
+  color:@text-color;
+}
+a {
+  color:@text-color;
+}
+a:hover, a:focus {
+  color: @text-color;
+  text-decoration: underline;
+}
+p {
+  color:#616161;
+}
+p.personal-phrase {
+  margin-left: 20px;
+  font-style: italic;
+  color: #7e7e7e;
+}
+p.personal-phrase i.fa-quote-right{
+  margin-left: 10px;
+  color: @text-color;
+}
+p.personal-phrase i.fa-quote-left{
+  color: @text-color;
+  margin-right: 5px;
+}
+.dropdown {
+  cursor:pointer;
+}
+
+@import "imports/app/less/app";
+@import "imports/app/less/responsive";
