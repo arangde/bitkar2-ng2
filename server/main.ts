@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 
-import { getValueOfKey } from './imports/fixtures/utils';
-import { AccessLogs } from '../both/collections/accesslogs.collection';
-
 import './imports/publications/parties';
 import './imports/publications/users';
 import '../both/methods/parties.methods';
 import './imports/publications/images';
+import './imports/publications/vendors';
+
+import { AccessLogs } from '../both/collections/accesslogs.collection';
 
 Meteor.startup(() => {
 
