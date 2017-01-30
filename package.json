@@ -6,7 +6,7 @@
   },
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "export MONGO_URL=mongodb://localhost:27017/bitkar2 && meteor run --settings settings.json --port 8000",
     "test": "meteor test --driver-package practicalmeteor:mocha",
     "test:ci": "meteor test --once --driver-package dispatch:mocha-phantomjs"
   },
@@ -21,6 +21,7 @@
     "@angular/platform-server": "2.1.2",
     "@angular/router": "3.1.2",
     "@types/node": "^6.0.45",
+    "amazon-product-api": "^0.4.3",
     "angular2-google-maps": "0.15.0",
     "angular2-meteor": "0.7.0",
     "angular2-meteor-accounts-ui": "1.0.0",
@@ -42,6 +43,7 @@
     "zone.js": "0.6.26"
   },
   "devDependencies": {
+    "@types/amazon-product-api": "0.0.30",
     "@types/chai": "^3.4.33",
     "@types/mocha": "^2.2.32",
     "chai": "3.5.0",

@@ -45,3 +45,5 @@ declare module 'meteor/accounts-base' {
     function verifyPhone(phoneNumber: string, code: string, callback?: Function): void;
   }
 }
+
+declare module 'typeless-package'

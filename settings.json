@@ -1,0 +1,42 @@
+{
+  "public" : {
+    "sessionPrefix": "bitkar-parts-node-angular-meteor-2016_",
+    "contactEmail": "info@bitkar.com",
+    "perPage": 20,
+    "apiPerPage": 20,
+    "analyticsSettings": {
+      "Google Analytics" : {"trackingId": "UA-42664823-3"}
+    }
+  },
+  "baseUrl" : "http://bitkar.parts/",
+  "contact": {
+    "email": {
+      "transport": "smtps://info@bitkar.com:foobar00@smtp.gmail.com"
+    }
+  },
+  "amazon": {
+    "AWSAccessKeyId": "AKIAJB4J5LPMRW4AFW7Q",
+    "SecretAccessKey": "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",
+    "AssociateTag": "fastnotlaun-20",
+    "regionName": "webservices.amazon.com",
+    "baseNodeId": 15684181
+  },
+  "ebay": {
+    "sandbox": false,
+    "compatabilityLevel": 963,
+    "findingVer": "1.8.0",
+    "siteID": 0,
+    "siteName": "bitkarinc",
+    "devID": "546059fe-729c-4696-918b-956d690ea83b",
+    "appID": "BitKarIn-0252-499f-b1c7-d8e4f2233291",
+    "certID": "86263ca8-84ad-47b6-831a-4661b45076f7",
+    "token": "AgAAAA**AQAAAA**aAAAAA**tDCWVw**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6AFk4WlCJmEoQ+dj6x9nY+seQ**1LACAA**AAMAAA**vCWqgglZmEV+tkRR61YxXYl5GWoC75bOgh7w0xpvMzP+jwWdPhjBw/117+ZOYM1rUEgAA5FTT72//7T40Yj4ou1Rk+/+QHci0w7KZbOBOV23E9tyoCcYr/6y6vDlaBeSOeEEp6DD3I/H9agUEYG9yamHhNzUsquIcCOWJl++O4unkV7zrdDDwKKcbg6dVeF2NCEOuxgN7w7ZwBUV+ZNp075MU3L4hYpeSo+Te+xx3vk4NRQX/B+9sM/ufrUfcgcbvyBrecKHVWveKbAYOkfpU8KTtBqMDGpywvUGb6QhEFukggCWqd5GcCTl0USACein3iclBEqNsxIBuLOXB3MWSw3iOXp2SRSzSxOuzxgtc3TsZrb4B5PZr/aEoXsdGuQ8IhgGPLwRDJrnp4PzLqlPsgiM7jyJzPW03W17n5N5d7yE7QF5Pqk0ffNJtlGIqERvcgvmkpFnn62VOlJbZogD+dA0YAcWPtdEYekZqRl1o+CxnsNYnZ+y94ulS6GlTX6LJYRbyx1s45rIjGqarUbfIBtPgc7YK/KnlmCvP1KJp8AILh4jwzaAM9WFVy9om1+xiE1eyzxJ+CThpPKLunVnHX2327kP4cE2z0D9Z6/4KfndV8eNoxwyrfy8Q9eH4t7RT2DVMiH1IK699qnyIh5g1vVny6XlzU4xYVMVUhP7/8tPNXkb3k4LUpa5rt5Gs2d4shbaG7R1pooIezARU5vhxIwdStoxjfhx2bYnPygFlOM9g44owTkjHf9pxn7s3DeP",
+    "affiliate": {
+      "customId": 1001,
+      "trackingId": 5337921752,
+      "networkId": 9
+    },
+    "baseCategoryId": 6028
+  },
+  "youtubeKey" : "AIzaSyB950usNaGtfWU6sSR0w7UrrrXKUvPJrjE"
+}
