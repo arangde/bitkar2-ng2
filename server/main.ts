@@ -7,6 +7,7 @@ import './imports/publications/images';
 
 import './imports/publications/vendors';
 import './imports/publications/baseitems';
+import './imports/publications/baseitemcounts';
 
 // import AmazonApi from './imports/fixtures/amazon.api';
 // import EbayApi from './imports/fixtures/ebay.api';
