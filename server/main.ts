@@ -6,8 +6,9 @@ import '../both/methods/parties.methods';
 import './imports/publications/images';
 
 import './imports/publications/vendors';
+import './imports/publications/baseitems';
 
-import AmazonApi from './imports/fixtures/amazon.api';
+// import AmazonApi from './imports/fixtures/amazon.api';
 import EbayApi from './imports/fixtures/ebay.api';
 
 import { AccessLogs } from '../both/collections/accesslogs.collection';
@@ -26,9 +27,9 @@ Meteor.startup(() => {
 
   const ebayApi: EbayApi = new EbayApi();
 
-  // ebayApi.getItemsAdvanced(["audi"], {ebayPage: 1}, (amazonErr, amazonResult) => {
-  //   console.log(amazonErr);
-  //   console.log(amazonResult);
-  // });
+  ebayApi.getItemsAdvanced(["audi"], {ebayPage: 1}, (amazonErr, amazonResult) => {
+    console.log(amazonErr);
+    console.log(amazonResult);
+  });
 
 });

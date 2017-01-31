@@ -4,6 +4,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Match } from 'meteor/check';
 import logger from 'winston';
+import * as _ from 'underscore';
 import { getVendorKey } from '../../../both/collections/vendors.collection';
 import { getSEOUrl, replacePropertyKey, removeHeadTags, getValueOfKey } from './utils';
 
@@ -15,7 +16,7 @@ class EbayApi {
   isCachedCategory(category) {
     var cached = false;
     _.each(this.cachedCategories, function (cachedCategory) {
-      if (cachedCategory.CategoryID == category.CategoryID) {
+      if (cachedCategory['CategoryID'] == category.CategoryID) {
         cached = true;
       }
     });

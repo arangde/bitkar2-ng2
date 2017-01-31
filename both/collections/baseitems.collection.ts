@@ -1,12 +1,14 @@
 import { MongoObservable } from 'meteor-rxjs';
 
-export const AccessLogs = new MongoObservable.Collection('accesslogs');
+import { BaseItem } from '../models/baseitem.model';
+
+export const BaseItems = new MongoObservable.Collection<BaseItem>('baseitems');
 
 function checkAvailable() {
   return true;
 }
 
-AccessLogs.allow({
+BaseItems.allow({
   insert: checkAvailable,
   update: checkAvailable,
   remove: checkAvailable
