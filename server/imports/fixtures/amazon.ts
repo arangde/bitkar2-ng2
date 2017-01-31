@@ -8,14 +8,14 @@ import { EJSON } from 'meteor/ejson';
 import { getVendorKey } from '../../../both/collections/vendors.collection';
 import { getSEOUrl, replacePropertyKey, getValueOfKey } from './utils';
 
-const amazonKeys = Meteor.settings['amazon'];
+const amazonSettings = Meteor.settings['amazon'];
 const amazonClient = amazon.createClient({
-  awsId: amazonKeys.AWSAccessKeyId,
-  awsSecret: amazonKeys.SecretAccessKey,
-  awsTag: amazonKeys.AssociateTag
+  awsId: amazonSettings.AWSAccessKeyId,
+  awsSecret: amazonSettings.SecretAccessKey,
+  awsTag: amazonSettings.AssociateTag
 });
 
-export default class AmazonApi {
+class AmazonApi {
 
   getPrice(json) {
     if (getValueOfKey(json, ["Offers", 0, "Offer", 0, "OfferListing", 0, "Price", 0])) {
@@ -37,8 +37,8 @@ export default class AmazonApi {
       }
     }
 
-    var attrs = product.ItemAttributes;
-    var image = product.MediumImage || product.SmallImage || product.LargeImage;
+    var attrs = product['ItemAttributes'];
+    var image = product['MediumImage'] || product['SmallImage'] || product['LargeImage'];
 
     if (onlyWithImage) {
       if (!image || image == undefined) {
@@ -47,8 +47,8 @@ export default class AmazonApi {
     }
 
     var amazonProduct = {
-      itemId: product.ASIN,
-      viewItemURL: product.DetailPageURL,
+      itemId: product['ASIN'],
+      viewItemURL: product['DetailPageURL'],
       galleryURL: (!image || image == undefined) ? "/images/nopicture.png" : image.URL[0],
       title: attrs.Title[0],
       subtitle: getValueOfKey(attrs, ["Brand", 0]),
@@ -58,8 +58,8 @@ export default class AmazonApi {
 
 
     var price = this.getPrice(json);
-    amazonProduct.price = price[0];
-    amazonProduct.priceFormatted = price[1];
+    amazonProduct['price'] = price[0];
+    amazonProduct['priceFormatted'] = price[1];
 
     return amazonProduct;
   }
@@ -72,11 +72,11 @@ export default class AmazonApi {
 
     var json = replacePropertyKey(json);
 
-    amazonProduct.rank = json["SalesRank"] != undefined ? json["SalesRank"][0] : 0;
-    amazonProduct.imageURL = amazonProduct.galleryURL;
+    amazonProduct['rank'] = json["SalesRank"] != undefined ? json["SalesRank"][0] : 0;
+    amazonProduct['imageURL'] = amazonProduct.galleryURL;
     delete amazonProduct.galleryURL;
-    amazonProduct.price = amazonProduct.priceFormatted;
-    delete amazonProduct.priceFormatted;
+    amazonProduct['price'] = amazonProduct['priceFormatted'];
+    delete amazonProduct['priceFormatted'];
 
     return amazonProduct;
   }
@@ -92,12 +92,12 @@ export default class AmazonApi {
       }
     }
 
-    var attrs = product.ItemAttributes;
-    var image = product.MediumImage || product.SmallImage || product.LargeImage;
+    var attrs = product['ItemAttributes'];
+    var image = product['MediumImage'] || product['SmallImage'] || product['LargeImage'];
 
     var amazonProduct = {
-      itemId: product.ASIN,
-      viewItemURL: product.DetailPageURL,
+      itemId: product['ASIN'],
+      viewItemURL: product['DetailPageURL'],
       galleryURL: (!image || image == undefined) ? "/images/nopicture.png" : image.URL[0],
       categoryName: getValueOfKey(attrs, ["ProductGroup", 0]),
       title: attrs.Title[0],
@@ -116,34 +116,34 @@ export default class AmazonApi {
     };
 
     var price = this.getPrice(json);
-    amazonProduct.price = price[0];
-    amazonProduct.priceFormatted = price[1];
+    amazonProduct['price'] = price[0];
+    amazonProduct['priceFormatted'] = price[1];
 
     if (attrs.ItemDimensions && attrs.ItemDimensions != undefined) {
       var dimensions = attrs.ItemDimensions[0];
       var dimension = dimensions.Model;
       if (dimension != undefined) {
-        amazonProduct.attributes.Model = dimension[0];
+        amazonProduct.attributes['Model'] = dimension[0];
       }
 
       var dimension = dimensions.Height;
       if (dimension != undefined) {
-        amazonProduct.attributes.Height = dimension[0]._ + ' ' + dimension[0]._prop.Units;
+        amazonProduct.attributes['Height'] = dimension[0]._ + ' ' + dimension[0]._prop.Units;
       }
 
       dimension = dimensions.Width;
       if (dimension != undefined) {
-        amazonProduct.attributes.Width = dimension[0]._ + ' ' + dimension[0]._prop.Units;
+        amazonProduct.attributes['Width'] = dimension[0]._ + ' ' + dimension[0]._prop.Units;
       }
 
       dimension = dimensions.Weight;
       if (dimension != undefined) {
-        amazonProduct.attributes.Weight = dimension[0]._ + ' ' + dimension[0]._prop.Units;
+        amazonProduct.attributes['Weight'] = dimension[0]._ + ' ' + dimension[0]._prop.Units;
       }
 
       dimension = dimensions.Length;
       if (dimension != undefined) {
-        amazonProduct.attributes.Length = dimension[0]._ + ' ' + dimension[0]._prop.Units;
+        amazonProduct.attributes['Length'] = dimension[0]._ + ' ' + dimension[0]._prop.Units;
       }
     }
 
@@ -151,37 +151,34 @@ export default class AmazonApi {
   }
 
   getItems(keywords, options, callback) {
-    // keywords = keywords.join(" ").trim();
-    // if (keywords == "") {
-    //     keywords = "Auto Parts";
-    // }
+    keywords = keywords.join(" ").trim();
 
     var params = {
-      // keywords: keywords,
-      browseNode: amazonKeys.baseNodeId, //Auto Parts
+      keywords: keywords,
+      browseNode: amazonSettings.baseNodeId, //Auto Parts
       searchIndex: 'Automotive',
       itemPage: options.itemPage,
       responseGroup: 'ItemAttributes,Images,Offers'
     };
 
     if (options['priceSort'] && options['priceSort'] == 1) {
-      params.sort = "price";
+      params['sort'] = "price";
     }
     else if (options['priceSort'] && options['priceSort'] == 2) {
-      params.sort = "-price";
+      params['sort'] = "-price";
     }
 
     console.log('amazon params', params);
 
-    amazonClient.itemSearch(params, function (err, products, response) {
+    amazonClient.itemSearch(params, (err, products, response) => {
       if (err) {
         callback(err);
       } else {
-        var result = {
+        const result = {
           products: products,
           total: {
-            totalEntries: response.TotalResults[0], //Math.min(response.TotalResults[0], 100),
-            totalPages: response.TotalPages[0],
+            totalEntries: response[0].TotalResults[0],
+            totalPages: response[0].TotalPages[0],
             pageNumber: options.itemPage,
           }
         };
@@ -199,11 +196,11 @@ export default class AmazonApi {
     var params = {
       keywords: keywords,
       searchIndex: 'Automotive',
-      browseNode: amazonKeys.baseNodeId,
+      browseNode: amazonSettings.baseNodeId,
       responseGroup: 'ItemAttributes'
     };
 
-    amazonClient.itemSearch(params, function (err, products) {
+    amazonClient.itemSearch(params, (err, products) => {
       if (err) {
         callback(err);
       } else {
@@ -214,13 +211,13 @@ export default class AmazonApi {
 
   getTopProducts(callback) {
     var params = {
-      browseNode: amazonKeys.baseNodeId, //Auto Parts
+      browseNode: amazonSettings.baseNodeId, //Auto Parts
       searchIndex: 'Automotive',
       sort: 'salesrank',
       responseGroup: 'ItemAttributes,Images,Offers,SalesRank'
     };
 
-    amazonClient.itemSearch(params, function (err, products, response) {
+    amazonClient.itemSearch(params, (err, products) => {
       if (err) {
         callback(err);
       } else {
@@ -247,3 +244,5 @@ export default class AmazonApi {
     );
   }
 };
+
+export default AmazonApi;

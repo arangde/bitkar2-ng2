@@ -5,7 +5,7 @@ import './imports/publications/users';
 import '../both/methods/parties.methods';
 import './imports/publications/images';
 import './imports/publications/vendors';
-import './imports/fixtures/amazon';
+import AmazonApi from './imports/fixtures/amazon';
 
 import { AccessLogs } from '../both/collections/accesslogs.collection';
 
@@ -19,6 +19,13 @@ Meteor.startup(() => {
       httpHeaders: conn.httpHeaders,
       dateTime: now
     });
+  });
+
+  const amazonApi: AmazonApi = new AmazonApi();
+
+  amazonApi.getItems(["audi"], {itemPage: 1}, (amazonErr, amazonResult) => {
+    console.log(amazonErr);
+    console.log(amazonResult);
   });
 
 });
