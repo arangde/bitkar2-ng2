@@ -4,7 +4,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Match } from 'meteor/check';
 import * as amazon from 'amazon-product-api';
-import { EJSON } from 'meteor/ejson';
 import { getVendorKey } from '../../../both/collections/vendors.collection';
 import { getSEOUrl, replacePropertyKey, getValueOfKey } from './utils';
 
