@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map';
 
 import template from './product-details.component.html';
 import style from '../less/product-details.less';
+import { SessionService } from '../shared/session.service';
 
 @Component({
   selector: 'product-details',
@@ -20,11 +21,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   productSub: Subscription;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public session: SessionService
   ) {}
 
   ngOnInit() {
-
+    console.log(this.session.id());
   }
 
   ngOnDestroy() {

@@ -14,6 +14,7 @@ import { PRODUCTS_DECLARATIONS } from "./products/index";
 // import { MOBILE_DECLARATIONS } from "./mobile/index";
 // import { AppMobileComponent } from "./mobile/app.component.mobile";
 // import { IonicModule, IonicApp } from "ionic-angular";
+import { SessionService } from "./shared/session.service";
 
 let moduleDefinition = {
   imports: [
@@ -32,7 +33,7 @@ let moduleDefinition = {
     ...SHARED_DECLARATIONS,
   ],
   providers: [
-
+    SessionService
   ],
   bootstrap: [
     AppComponent

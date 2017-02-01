@@ -3,6 +3,7 @@ import { PaginationService } from 'ng2-pagination';
 
 import template from './products-list.component.html';
 import style from '../less/products-list.less';
+import { SessionService } from '../shared/session.service';
 
 @Component({
   selector: 'products-list',
@@ -10,12 +11,13 @@ import style from '../less/products-list.less';
   styles: [ style ]
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
-  constructor() {
-
+  constructor(
+    public session: SessionService,
+  ) {
   }
 
   ngOnInit() {
-
+    console.log(this.session.id());
   }
 
   ngOnDestroy() {
