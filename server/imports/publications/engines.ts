@@ -15,11 +15,11 @@ Meteor.publish('engines', function(options, filter) {
     selector["Model"] = filter.model;
   }
 
-  const engineIds = [];
+  const engineIds: Array<any> = [];
 
   Vehicles.find(selector).forEach(function(vehicle) {
-    if(engineIds.indexOf(vehicle.EngineLegacyID) === -1) {
-      engineIds.push(vehicle.EngineLegacyID);
+    if(engineIds.indexOf(vehicle['EngineLegacyID']) === -1) {
+      engineIds.push(vehicle['EngineLegacyID']);
     }
   });
 

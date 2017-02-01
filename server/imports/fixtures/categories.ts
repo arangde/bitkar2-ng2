@@ -1,17 +1,17 @@
-// import async from 'async';
+// import async from 'meteor/meteorhacks:async';
 
 import { Categories } from '../../../both/collections/categories.collection';
 
 var cachedCategoryIds = [];
 
 function getChildCategories(categoryId) {
-  return Categories.find({'CategoryParentID': categoryId}).fetch();
+  return Categories.collection.find({'CategoryParentID': categoryId}).fetch();
 };
 
 function loadCategory(categoryId) {
   categoryId = categoryId.toString();
 
-  const category = Categories.findOne({'CategoryID': categoryId});
+  const category = Categories.collection.findOne({'CategoryID': categoryId});
 
   if (!category) {
     throw new Error("Not found category");
@@ -20,7 +20,7 @@ function loadCategory(categoryId) {
     cachedCategoryIds.push(categoryId);
 
     const children = getChildCategories(categoryId);
-    async.each(children, function (child) {
+    children.forEach((child) => {
       if(cachedCategoryIds.indexOf(child.CategoryID) === -1) {
         if (child.LeafCategory) {
           cachedCategoryIds.push(child.CategoryID);
