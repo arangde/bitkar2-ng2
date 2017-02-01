@@ -12,6 +12,10 @@ import './imports/publications/basevideos';
 import './imports/publications/basevideocounts';
 import './imports/publications/brands';
 
+if (Meteor.isServer) {
+
+}
+
 // import AmazonApi from './imports/fixtures/amazon.api';
 // import EbayApi from './imports/fixtures/ebay.api';
 

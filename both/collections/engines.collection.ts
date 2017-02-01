@@ -1,14 +1,14 @@
 import { MongoObservable } from 'meteor-rxjs';
 
-import { Brand } from '../models/brand.model';
+import { Engine } from '../models/engine.model';
 
-export const Brands = new MongoObservable.Collection<Brand>('brands');
+export const Engines = new MongoObservable.Collection<Engine>('enginelegacies');
 
 function checkAvailable() {
   return true;
 }
 
-Brands.allow({
+Engines.allow({
   insert: checkAvailable,
   update: checkAvailable,
   remove: checkAvailable
