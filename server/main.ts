@@ -15,7 +15,10 @@ import './imports/publications/categories';
 import './imports/publications/engines';
 import './imports/publications/vehicles';
 import './imports/publications/globalparts';
-
+import './imports/publications/makes';
+import './imports/publications/productcounts';
+import './imports/publications/productinfo';
+import './imports/publications/products';
 
 // import AmazonApi from './imports/fixtures/amazon.api';
 // import EbayApi from './imports/fixtures/ebay.api';

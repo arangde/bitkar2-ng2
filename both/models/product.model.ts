@@ -1,6 +1,6 @@
 import { CollectionObject } from './collection-object.model';
 
-export interface BaseItem extends CollectionObject {
+export interface Product extends CollectionObject {
   itemId: any;
   viewItemURL: string;
   galleryURL: string;
@@ -8,7 +8,6 @@ export interface BaseItem extends CollectionObject {
   subtitle?: string;
   seoURL: string;
   vendor: string;
-  price: number;
-  priceFormatted: string;
-  categoryId?: any;
+  price?: number;
+  sessionId: string;
 }
