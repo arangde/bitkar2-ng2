@@ -19,6 +19,9 @@ import './imports/publications/makes';
 import './imports/publications/productcounts';
 import './imports/publications/productinfo';
 import './imports/publications/products';
+import './imports/publications/sitemaps';
+import './imports/publications/videos';
+import './imports/publications/videocounts';
 
 // import AmazonApi from './imports/fixtures/amazon.api';
 // import EbayApi from './imports/fixtures/ebay.api';
