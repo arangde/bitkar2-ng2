@@ -17,14 +17,14 @@ Meteor.publish('engines', function(options, filter) {
 
   const engineIds: Array<any> = [];
 
-  Vehicles.find(selector).forEach(function(vehicle) {
+  Vehicles.collection.find(selector).forEach(function(vehicle) {
     if(engineIds.indexOf(vehicle['EngineLegacyID']) === -1) {
       engineIds.push(vehicle['EngineLegacyID']);
     }
   });
 
   if(engineIds.length) {
-    return Engines.find({"EngineLegacyID": {"$in": engineIds}});
+    return Engines.collection.find({"EngineLegacyID": {"$in": engineIds}});
   }
   else {
     this.ready();

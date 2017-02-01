@@ -4,5 +4,5 @@ import { BaseVideoCounts } from '../../../both/collections/basevideocounts.colle
 Meteor.publish('basevideocounts', (options) => {
   const selector = {};
 
-  return BaseVideoCounts.find(selector);
+  return BaseVideoCounts.collection.find(selector);
 });

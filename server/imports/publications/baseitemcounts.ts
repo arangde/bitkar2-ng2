@@ -4,5 +4,5 @@ import { BaseItemCounts } from '../../../both/collections/baseitemcounts.collect
 Meteor.publish('baseitemcounts', function() {
   const selector = {};
 
-  return BaseItemCounts.find(selector);
+  return BaseItemCounts.collection.find(selector);
 });

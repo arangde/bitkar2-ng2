@@ -14,13 +14,15 @@ import './imports/publications/brands';
 import './imports/publications/categories';
 import './imports/publications/engines';
 import './imports/publications/vehicles';
+import './imports/publications/globalparts';
 
 
 // import AmazonApi from './imports/fixtures/amazon.api';
 // import EbayApi from './imports/fixtures/ebay.api';
+// import LocalFeedApi from './imports/fixtures/localfeed.api';
 
 import { CJFeeds, PJFeeds } from './imports/collections/localfeeds.collection';
-import { AccessLogs } from '../both/collections/accesslogs.collection';
+import { AccessLogs } from './imports/collections/accesslogs.collection';
 
 Meteor.startup(() => {
 
@@ -35,9 +37,9 @@ Meteor.startup(() => {
   });
 
 
-  // const ebayApi: EbayApi = new EbayApi();
+  // const localfeedApi: LocalFeedApi = new LocalFeedApi();
   //
-  // ebayApi.getItemsAdvanced(["audi"], {ebayPage: 1}, (amazonErr, amazonResult) => {
+  // localfeedApi.getCJItem("5855576c847e136b4e5709b6", (amazonErr, amazonResult) => {
   //   console.log(amazonErr);
   //   console.log(amazonResult);
   // });

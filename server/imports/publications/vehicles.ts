@@ -11,5 +11,5 @@ Meteor.publish('vehicles', function(options) {
     selector["LegacyVehicleID"] = options.legacyVehicleID;
   }
 
-  return Vehicles.find(selector);
+  return Vehicles.collection.find(selector);
 });
