@@ -2,11 +2,10 @@ import { CollectionObject } from './collection-object.model';
 
 export interface VideoCount extends CollectionObject {
   sessionId: string;
-  totalResults: number;
-  resultsPerPage: number;
-  totalPages: number;
+  totalResults: any;
+  resultsPerPage: any;
+  totalPages: any;
   nextPageToken?: string;
   prevPageToken?: string;
-  categoryId: string;
-  vendor: string;
+  lastActivity: number;
 }

@@ -3,16 +3,12 @@
  */
 import { Meteor } from 'meteor/meteor';
 import { Match } from 'meteor/check';
+import * as YoutubeSearch from "youtube-search";
+import * as _ from 'underscore';
 import { Videos } from '../collections/videos.collection';
-import YoutubeApi from 'meteor/renaldo:youtube-api';
 import { VideoCounts } from '../collections/videocounts.collection';
 
-
 if(Meteor.isServer) {
-  YoutubeApi.authenticate({
-    type: 'key',
-    key: Meteor.settings.youtubeKey
-  });
 
   Meteor.methods({
     'searchVideo': function (filters, options) {
@@ -24,25 +20,24 @@ if(Meteor.isServer) {
         }
       });
 
-      const query = keywords.join(" ").trim();
-      var order = 'relevance';
-      if (query == "") {
+      let now = new Date();
+      const q = keywords.join(" ").trim();
+
+      let order = 'relevance';
+      if (q == "") {
         order = 'viewCount';
       }
 
-      var videoCaption = "closedCaption";
-      var now = new Date();
-
-      var searchOptions = {
+      const searchOptions: YoutubeSearch.YouTubeSearchOptions = {
+        key: Meteor.settings['youtubeKey'],
         part: "snippet",
         publishedAfter: (now.getFullYear() - 3) + "-01-01T00:00:00Z",
-        videoCaption: videoCaption,
+        videoCaption: "closedCaption",
         type: "video",
         maxResults: 6,
-        q: query,
         videoCategoryId: "2", // Autos & Vehicles,
         regionCode: "US",
-        order: order
+        order: order,
       };
 
       if (options.pageToken) {
@@ -50,7 +45,7 @@ if(Meteor.isServer) {
       }
       console.log('searchOptions', searchOptions);
 
-      YoutubeApi.search.list(searchOptions, Meteor.bindEnvironment(function (err, data) {
+      YoutubeSearch(q, searchOptions, (err, items, pageInfo) => {
         Videos.collection.remove({"sessionId": options.sessionId});
         VideoCounts.collection.remove({"sessionId": options.sessionId});
 
@@ -58,27 +53,27 @@ if(Meteor.isServer) {
           console.error(err);
         }
         else {
-          if (Match.test(data.items, Match.Any) && data.items != undefined) {
-            const now = new Date();
-            var videoCount = {
+          if (Match.test(items, Match.Any) && items != undefined) {
+            now = new Date();
+            const videoCount = {
               sessionId: options.sessionId,
-              totalResults: data.pageInfo.totalResults,
-              resultsPerPage: data.pageInfo.resultsPerPage,
-              totalPages: Math.ceil(data.pageInfo.totalResults / data.pageInfo.resultsPerPage),
-              nextPageToken: data.nextPageToken,
-              prevPageToken: data.prevPageToken,
-              lastActivity: now.getTime()
+              totalResults: pageInfo.totalResults,
+              resultsPerPage: pageInfo.resultsPerPage,
+              totalPages: Math.ceil(pageInfo.totalResults / pageInfo.resultsPerPage),
+              nextPageToken: pageInfo.nextPageToken,
+              prevPageToken: pageInfo.prevPageToken,
+              lastActivity: now.getTime(),
             };
             VideoCounts.insert(videoCount);
 
-            _.each(data.items, function (item, i) {
-              var video = {
-                videoId: item.id.videoId,
-                title: item.snippet.title,
-                thumbnail: item.snippet.thumbnails.default.url,
-                url: "https://youtu.be/" + item.id.videoId,
+            _.each(items, function (item, i) {
+              const video = {
+                videoId: item.id,
+                title: item.title,
+                thumbnail: item.thumbnails.default[0].url,
+                url: "https://youtu.be/" + item.id,
                 sessionId: options.sessionId,
-                lastActivity: now.getTime()
+                lastActivity: now.getTime(),
               };
               Videos.insert(video);
             });
@@ -87,7 +82,7 @@ if(Meteor.isServer) {
             console.error("Youtube could not search with keywords");
           }
         }
-      }));
+      });
     }
   });
 }
