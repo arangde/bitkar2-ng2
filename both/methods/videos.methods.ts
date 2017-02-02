@@ -70,7 +70,7 @@ if(Meteor.isServer) {
               const video = {
                 videoId: item.id,
                 title: item.title,
-                thumbnail: item.thumbnails.default[0].url,
+                thumbnail: item.thumbnails['default'][0]['url'],
                 url: "https://youtu.be/" + item.id,
                 sessionId: options.sessionId,
                 lastActivity: now.getTime(),

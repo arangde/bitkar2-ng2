@@ -23,11 +23,6 @@ import './imports/publications/sitemaps';
 import './imports/publications/videos';
 import './imports/publications/videocounts';
 
-// import AmazonApi from './imports/fixtures/amazon.api';
-// import EbayApi from './imports/fixtures/ebay.api';
-// import LocalFeedApi from './imports/fixtures/localfeed.api';
-
-import { CJFeeds, PJFeeds } from './imports/collections/localfeeds.collection';
 import { AccessLogs } from './imports/collections/accesslogs.collection';
 
 Meteor.startup(() => {
