@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription, Subject } from "rxjs";
 import { PaginationService } from "ng2-pagination";
 import { MeteorObservable } from "meteor-rxjs";
@@ -13,6 +13,7 @@ import { Category } from "../../../../both/models/category.model";
 import { Categories } from "../../../../both/collections/categories.collection";
 import { Product } from "../../../../both/models/product.model";
 import { Products } from "../../../../both/collections/products.collection";
+import { BaseItems } from "../../../../both/collections/baseitems.collection";
 import { Make } from "../../../../both/models/make.model";
 import { Makes } from "../../../../both/collections/makes.collection";
 import { Vehicle } from '../../../../both/models/vehicle.model';
@@ -23,7 +24,7 @@ import { GlobalPart } from '../../../../both/models/globalpart.model';
 import { GlobalParts } from "../../../../both/collections/globalparts.collection";
 import { Vendor } from '../../../../both/models/vendor.model';
 import { Vendors } from "../../../../both/collections/vendors.collection";
-import { addCssClass, removeCssClass, getEngineDisplay } from "../../../../both/methods/utils";
+import { getEngineDisplay } from "../../../../both/methods/utils";
 
 import template from './products-list.component.html';
 import style from '../less/products-list.less';
@@ -43,10 +44,27 @@ interface Options extends Pagination {
   styles: [ style ]
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
-  pageSize: Subject<number> = new Subject<number>();
+  sessionId: string;
+  searching: boolean = false;
+  searchFailed: boolean = false;
+  baseSearch: boolean = true;
+  showCounter: boolean = true;
+  baseVideoSearch: boolean = true;
+  searchText: string = '';
+  years: number[];
+  year: number = 0;
+  make: string = '';
+  model: string = '';
+  engine: string = '';
+  categoryId: string = '';
+  categoryName: string = '';
+  brandName: string = '';
+  priceSort: string = '';
+  vendor: string = '';
+
   curPage: Subject<number> = new Subject<number>();
-  nameOrder: Subject<number> = new Subject<number>();
-  perPage: number = 20; // Meteor.settings['public']['perPage'];
+  pageSize: number = 20; // Meteor.settings['public']['pageSize'];
+  
   optionsSub: Subscription;
   autorunSub: Subscription;
   brands: Observable<Brand[]>;
@@ -55,7 +73,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   categoriesSub: Subscription;
   products: Observable<Product[]>;
   productsSub: Subscription;
-  productsSize: number = 0;
+  productsCount: number = 0;
+  baseItemsSub: Subscription;
   vehicles: Observable<Vehicle[]>;
   vehiclesSub: Subscription;
   makes: Observable<Make[]>;
@@ -65,17 +84,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   enginesSub: Subscription;
   vendors: Observable<Vendor[]>;
   vendorsSub: Subscription;
-  years: number[];
-  year: number = 0;
-  make: string = '';
-  model: string = '';
-  engine: string = '';
-  categoryId: string = '';
-  categoryName: string = '';
-  brandName: string = '';
-
-  constructor(private session: SessionService, private pagination: PaginationService, private zone: NgZone) {
-    console.log(this.session.id());
+  
+  constructor(private session: SessionService, private pagination: PaginationService) {
+    this.sessionId = this.session.id();
 
     const years: number[] = [];
     const maxYear:number = (new Date()).getFullYear() + 1;
@@ -88,48 +99,62 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.optionsSub = Observable.combineLatest(
-      this.pageSize,
       this.curPage,
-      this.nameOrder,
-    ).subscribe(([pageSize, curPage, nameOrder]) => {
-      const options: Options = {
-        limit: pageSize as number,
-        skip: ((curPage as number) - 1) * (pageSize as number),
-        sort: { name: nameOrder as number }
-      };
+      this.baseSearch,
+      this.categoryId,
+      this.priceSort,
+      this.vendor
+    ).subscribe(([curPage, baseSearch, categoryId, priceSort, vendor]) => {
+      if(baseSearch) {
+        if (this.baseItemsSub) {
+          this.baseItemsSub.unsubscribe();
+        }
 
-      this.pagination.setCurrentPage(this.pagination.defaultId, curPage as number);
+        const filter = {
+          categoryId: categoryId,
+          vendor: vendor,
+        };
 
-      if (this.productsSub) {
-        this.productsSub.unsubscribe();
+        this.baseItemsSub = MeteorObservable.subscribe('baseitems', filter, this.pageSize).subscribe(() => {
+          this.products = BaseItems.find({}).zone();
+        });
       }
+      else {
+        this.pagination.setCurrentPage(this.pagination.defaultId, curPage as number);
 
-      const filter = {};
+        if (this.productsSub) {
+          this.productsSub.unsubscribe();
+        }
 
-      this.productsSub = MeteorObservable.subscribe('products', options, filter).subscribe(() => {
-        this.products = Products.find({}, {
-          sort: {
-            name: nameOrder
-          }
-        }).zone();
-      });
+        const options: Options = {
+          limit: this.pageSize,
+          skip: ((curPage as number) - 1) * (pageSize as number)
+        };
+        const filter = {
+          priceSort: priceSort,
+          vendorFilter: vendor,
+          page: curPage as number,
+          sessionId: this.sessionId
+        };
 
+        this.productsSub = MeteorObservable.subscribe('products', options, filter).subscribe(() => {
+          this.products = Products.find({}).zone();
+        });
+      }
     });
 
     this.pagination.register({
       id: this.pagination.defaultId,
-      itemsPerPage: this.perPage,
+      itemsPerPage: this.pageSize,
       currentPage: 1,
-      totalItems: this.productsSize
+      totalItems: this.productsCount
     });
 
-    this.pageSize.next(this.perPage);
     this.curPage.next(1);
-    this.nameOrder.next(1);
 
     this.autorunSub = MeteorObservable.autorun().subscribe(() => {
-      this.productsSize = Counts.get('numberOfProducts');
-      this.pagination.setTotalItems(this.pagination.defaultId, this.productsSize);
+      this.productsCount = Counts.get('numberOfProducts');
+      this.pagination.setTotalItems(this.pagination.defaultId, this.productsCount);
     });
 
     if(this.brandsSub) {
@@ -173,19 +198,19 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.vendorsSub.unsubscribe();
   }
 
-  search(value: string): void {
-    this.curPage.next(1);
-  }
+  // search(value: string): void {
+  //   this.curPage.next(1);
+  // }
+  //
+  // onPageChanged(page: number): void {
+  //   this.curPage.next(page);
+  // }
+  //
+  // changeSortOrder(nameOrder: string): void {
+  //   this.nameOrder.next(parseInt(nameOrder));
+  // }
 
-  onPageChanged(page: number): void {
-    this.curPage.next(page);
-  }
-
-  changeSortOrder(nameOrder: string): void {
-    this.nameOrder.next(parseInt(nameOrder));
-  }
-
-  categoryChanged(category, $event) {
+  onCategoryChanged(category, $event) {
     if(category) {
       this.categoryId = category.CategoryID;
       this.categoryName = category.CategoryName;
@@ -194,19 +219,20 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     document.querySelector("ul.category-filter>li.active").classList.remove("active");
     $event.target.classList.add("active");
 
-    // this.getSearchText();
-    // this.search();
+    this.getSearchText();
+    this.search();
   }
 
-  brandChanged(brand, $event) {
-    if(brand)
+  onBrandChanged(brand, $event) {
+    if(brand) {
       this.brandName = brand.BrandName;
+    }
 
     document.querySelector("ul.brand-filter>li.active").classList.remove("active");
     $event.target.classList.add("active");
 
-    // this.getSearchText();
-    // this.search();
+    this.getSearchText();
+    this.search();
   }
 
   onYearChanged(year: string): void {
@@ -219,22 +245,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.make = make;
 
     this._updateVehicles();
-  }
-
-  _updateVehicles(): void {
-    if(this.vehiclesSub) {
-      this.vehiclesSub.unsubscribe();
-    }
-
-    const options = {
-      year: this.year,
-      make: this.make,
-    };
-
-    this.vehiclesSub = MeteorObservable.subscribe('vehicles', options).subscribe(() => {
-      const models = _.uniq(Vehicles.find({}, {sort: {'Model': 1}}).fetch().map((vehicle) => vehicle.Model));
-      this.models = Observable.of(models);
-    });
   }
 
   onModelChanged(model: string): void {
@@ -261,6 +271,140 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   onVendorChanged(vendor: string): void {
+    this.vendor = vendor;
+    this.search();
+  }
 
+  onPriceSortChanged(priceSort: string): void {
+    this.priceSort = priceSort;
+    this.curPage.next(1);
+    this._findProducts();
+  }
+
+  getSearchText() {
+    const searchText = this.categoryName + ' ' + this.brandName;
+    this.searchText = searchText.trim();
+  }
+
+  search() {
+    if(this._localSearchable()) {
+      this._findLocal();
+    }
+    else {
+      this.curPage.next(1);
+      this._findProducts();
+    }
+
+    if(this._localVideoSearchable()) {
+      this._findVideosLocal();
+    }
+    else {
+      this._findVideos();
+    }
+  }
+
+  _updateVehicles(): void {
+    if(this.vehiclesSub) {
+      this.vehiclesSub.unsubscribe();
+    }
+
+    const options = {
+      year: this.year,
+      make: this.make,
+    };
+
+    this.vehiclesSub = MeteorObservable.subscribe('vehicles', options).subscribe(() => {
+      const models = _.uniq(Vehicles.find({}, {sort: {'Model': 1}}).fetch().map((vehicle) => vehicle.Model));
+      this.models = Observable.of(models);
+    });
+  }
+
+  _localSearchable() {
+    if(this.priceSort || this.year || this.make || this.model || this.engine) {
+      return false;
+    }
+    else {
+      if(this.searchText != this.categoryName)
+        return false;
+    }
+
+    return true;
+  }
+
+  _findProducts(reload = true) {
+    this.baseSearch = false;
+    this.searching = true;
+    this.searchFailed = false;
+
+    const options = {
+      categoryId: this.categoryId,
+      priceSort: this.priceSort,
+      vendorFilter: this.vendor,
+      reload: reload,
+      sessionId: this.sessionId,
+    };
+
+    const filters = {
+      searchText: this.searchText,
+      year: this.year,
+      make: this.make,
+      model: this.model,
+    };
+
+    if(this.engine) {
+      filters['engine'] = this.engine;
+    }
+
+    // analytics.track('shop', Object.assign({}, options, filters));
+
+    MeteorObservable.call('findProducts', filters, options).subscribe((result) => {
+        console.log('Response on find products', result);
+      }, (error) => {
+        console.error('Error detected on find products', error);
+      });
+  }
+
+  _findLocal() {
+    // analytics.track('shop', {search: 'All'});
+
+    this.baseSearch = true;
+  }
+
+  _localVideoSearchable() {
+    if(this.year || this.make || this.model) {
+      return false;
+    }
+    else {
+      if(this.searchText != this.categoryName)
+        return false;
+    }
+
+    return true;
+  }
+
+  _findVideos() {
+    this.baseVideoSearch = false;
+
+    const filters = {
+      searchText: this.searchText,
+      vendorFilter: this.vendor,
+      year: this.year,
+      make: this.make,
+      model: this.model,
+    };
+
+    const options = {
+      sessionId: this.sessionId,
+    };
+
+    Meteor.call('findVideos', filters, options).subscribe((result) => {
+        console.log('Response on find videos', result);
+      }, (error) => {
+        console.error('Error detected on find videos', error);
+      });
+  }
+
+  _findVideosLocal() {
+    this.baseVideoSearch = true;
   }
 }

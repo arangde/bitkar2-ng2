@@ -22,11 +22,9 @@ Meteor.publish('products', function(options, filter) {
     selector['sessionId'] = filter.sessionId;
   }
 
-  Counts.publish(this, 'numberOfProducts', Products.collection.find(selector), {
-    noReady: true
-  });
+  Counts.publish(this, 'numberOfProducts', Products.collection.find(selector), {noReady: true});
 
-  return Products.collection.find(selector, options);
+  return Products.find(selector, options);
 });
 
 Meteor.publish('product', function(productId: string) {

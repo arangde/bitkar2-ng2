@@ -20,7 +20,7 @@
         <form id="frm_filter" class="form-inline">
           <div class="row">
             <div class="col-md-10 col-md-offset-1">
-              <input type="text" #searchText class="search-query" placeholder="What part do you want?" />
+              <input type="text" [(ngModel)]="searchText" #searchText class="search-query" placeholder="What part do you want?" />
             </div>
           </div>
           <div class="row">
@@ -54,15 +54,15 @@
           </div>
           <div class="row">
             <div class="col-md-4">
-              <select class="search-query">
+              <select #sortPrice (change)="onPriceSortChanged(sortPrice.value)" class="search-query">
                 <option value="" selected>Sort by price</option>
                 <option value="1">Low to High</option>
                 <option value="2">High to Low</option>
                 <option value="3">None</option>
               </select>
             </div>
-            <div #filterVendor (change)="onVendorChanged(filterVendor.value)" class="col-md-4">
-              <select class="search-query">
+            <div class="col-md-4">
+              <select #filterVendor (change)="onVendorChanged(filterVendor.value)" class="search-query">
                 <option value="" selected>Filter by vendor</option>
                 <option *ngFor="let v of vendors | async" value="{{v.key}}">{{v.label}}</option>
               </select>
@@ -76,8 +76,8 @@
       <div class="group filter-button-top">
         <p class="filter-text">Categories</p>
         <ul class="filter group albumFilter category-filter">
-          <li (click)="categoryChanged(null, $event)" class="all-keywords active">All</li>
-          <li *ngFor="let c of categories | async" (click)="categoryChanged(c, $event)">{{c.CategoryName}}</li>
+          <li (click)="onCategoryChanged(null, $event)" class="all-keywords active">All</li>
+          <li *ngFor="let c of categories | async" (click)="onCategoryChanged(c, $event)">{{c.CategoryName}}</li>
         </ul>
       </div>
     </div>
@@ -86,8 +86,8 @@
       <div class="group filter-button-top">
         <p class="filter-text">Brands</p>
         <ul class="filter group albumFilter brand-filter">
-          <li (click)="brandChanged(null, $event)" class="all-brands active">All</li>
-          <li *ngFor="let b of brands | async" (click)="brandChanged(b, $event)" >{{b.BrandName}}</li>
+          <li (click)="onBrandChanged(null, $event)" class="all-brands active">All</li>
+          <li *ngFor="let b of brands | async" (click)="onBrandChanged(b, $event)" >{{b.BrandName}}</li>
         </ul>
       </div>
     </div>

@@ -11,7 +11,7 @@ import { VideoCounts } from '../collections/videocounts.collection';
 if(Meteor.isServer) {
 
   Meteor.methods({
-    'searchVideo': function (filters, options) {
+    'findVideos': function (filters, options) {
       const keywords = [];
 
       _.forEach(filters, function (value, key) {

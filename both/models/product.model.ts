@@ -2,6 +2,8 @@ import { CollectionObject } from './collection-object.model';
 
 export interface Product extends CollectionObject {
   itemId: any;
+  categoryId?: any;
+  sessionId?: string;
   viewItemURL: string;
   galleryURL: string;
   title: string;
@@ -9,5 +11,5 @@ export interface Product extends CollectionObject {
   seoURL: string;
   vendor: string;
   price?: number;
-  sessionId: string;
+  priceFormatted?: string;
 }

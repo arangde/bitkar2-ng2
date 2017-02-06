@@ -1,8 +1,8 @@
 import { MongoObservable } from 'meteor-rxjs';
 
-import { BaseItem } from '../models/baseitem.model';
+import { Product } from '../models/product.model';
 
-export const BaseItems = new MongoObservable.Collection<BaseItem>('baseitems');
+export const BaseItems = new MongoObservable.Collection<Product>('baseitems');
 
 function checkAvailable() {
   return true;
