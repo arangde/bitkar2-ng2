@@ -68,3 +68,19 @@ export function getEngineDisplay(engine) {
 function getEngineValue(engineValue) {
   return (engineValue && engineValue != '-' && engineValue != '--')? engineValue + " " : "";
 };
+
+export function addCssClass(element, className) {
+  const elements = Array.isArray(element)? element: [element];
+
+  elements.forEach((el) => {
+    el.classList.add(className);
+  });
+}
+
+export function removeCssClass(element, className) {
+  const elements = Array.isArray(element)? element: [element];
+
+  elements.forEach((el) => {
+    el.classList.remove(className);
+  });
+}

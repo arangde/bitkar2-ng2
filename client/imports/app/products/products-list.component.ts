@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { Meteor } from 'meteor/meteor';
+import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { Observable, Subscription, Subject } from "rxjs";
 import { PaginationService } from "ng2-pagination";
 import { MeteorObservable } from "meteor-rxjs";
@@ -7,6 +7,10 @@ import { Counts } from "meteor/tmeasday:publish-counts";
 import * as _ from 'underscore';
 
 import { SessionService } from '../shared/session.service';
+import { Brand } from "../../../../both/models/brand.model";
+import { Brands } from "../../../../both/collections/brands.collection";
+import { Category } from "../../../../both/models/category.model";
+import { Categories } from "../../../../both/collections/categories.collection";
 import { Product } from "../../../../both/models/product.model";
 import { Products } from "../../../../both/collections/products.collection";
 import { Make } from "../../../../both/models/make.model";
@@ -15,11 +19,11 @@ import { Vehicle } from '../../../../both/models/vehicle.model';
 import { Vehicles } from "../../../../both/collections/vehicles.collection";
 import { Engine } from '../../../../both/models/engine.model';
 import { Engines } from "../../../../both/collections/engines.collection";
-import { getEngineDisplay } from "../../../../both/methods/utils";
 import { GlobalPart } from '../../../../both/models/globalpart.model';
 import { GlobalParts } from "../../../../both/collections/globalparts.collection";
 import { Vendor } from '../../../../both/models/vendor.model';
 import { Vendors } from "../../../../both/collections/vendors.collection";
+import { addCssClass, removeCssClass, getEngineDisplay } from "../../../../both/methods/utils";
 
 import template from './products-list.component.html';
 import style from '../less/products-list.less';
@@ -45,6 +49,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   perPage: number = 20; // Meteor.settings['public']['perPage'];
   optionsSub: Subscription;
   autorunSub: Subscription;
+  brands: Observable<Brand[]>;
+  brandsSub: Subscription;
+  categories: Observable<Category[]>;
+  categoriesSub: Subscription;
   products: Observable<Product[]>;
   productsSub: Subscription;
   productsSize: number = 0;
@@ -62,6 +70,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   make: string = '';
   model: string = '';
   engine: string = '';
+  categoryId: string = '';
+  categoryName: string = '';
+  brandName: string = '';
 
   constructor(private session: SessionService, private pagination: PaginationService, private zone: NgZone) {
     console.log(this.session.id());
@@ -121,6 +132,20 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       this.pagination.setTotalItems(this.pagination.defaultId, this.productsSize);
     });
 
+    if(this.brandsSub) {
+      this.brandsSub.unsubscribe();
+    }
+    this.brandsSub = MeteorObservable.subscribe('brands').subscribe(() => {
+      this.brands = Brands.find({}).zone();
+    });
+
+    if(this.categoriesSub) {
+      this.categoriesSub.unsubscribe();
+    }
+    this.categoriesSub = MeteorObservable.subscribe('categories').subscribe(() => {
+      this.categories = Categories.find({}).zone();
+    });
+
     if(this.makesSub) {
       this.makesSub.unsubscribe();
     }
@@ -137,6 +162,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.brandsSub.unsubscribe();
+    this.categoriesSub.unsubscribe();
     this.productsSub.unsubscribe();
     this.optionsSub.unsubscribe();
     this.autorunSub.unsubscribe();
@@ -156,6 +183,30 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   changeSortOrder(nameOrder: string): void {
     this.nameOrder.next(parseInt(nameOrder));
+  }
+
+  categoryChanged(category, $event) {
+    if(category) {
+      this.categoryId = category.CategoryID;
+      this.categoryName = category.CategoryName;
+    }
+
+    document.querySelector("ul.category-filter>li.active").classList.remove("active");
+    $event.target.classList.add("active");
+
+    // this.getSearchText();
+    // this.search();
+  }
+
+  brandChanged(brand, $event) {
+    if(brand)
+      this.brandName = brand.BrandName;
+
+    document.querySelector("ul.brand-filter>li.active").classList.remove("active");
+    $event.target.classList.add("active");
+
+    // this.getSearchText();
+    // this.search();
   }
 
   onYearChanged(year: string): void {

@@ -10,7 +10,6 @@ Meteor.publish('vehicles', function(options) {
   if(options.make) {
     selector["Make"] = options.make;
   }
-  console.log(selector);
 
   return Vehicles.find(selector);
 });
