@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { Match } from 'meteor/check';
 import * as amazon from 'amazon-product-api';
 import { getVendorKey } from '../../../both/collections/vendors.collection';
-import { getSEOUrl, replacePropertyKey, getValueOfKey } from './utils';
+import { getSEOUrl, replacePropertyKey, getValueOfKey } from '../../../both/methods/utils';
 
 const amazonSettings = Meteor.settings['amazon'];
 const amazonClient = amazon.createClient({

@@ -20,28 +20,32 @@
         <form id="frm_filter" class="form-inline">
           <div class="row">
             <div class="col-md-10 col-md-offset-1">
-              <input type="text" class="search-query" placeholder="What part do you want?" />
+              <input type="text" #searchText class="search-query" placeholder="What part do you want?" />
             </div>
           </div>
           <div class="row">
             <div class="col-md-2">
-              <select class="search-query" placeholder="Year">
-                <option value="">- Year -</option>
+              <select #searchYear (change)="onYearChanged(searchYear.value)" class="search-query" placeholder="Year">
+                <option value="0">- Year -</option>
+                <option *ngFor="let y of years">{{y}}</option>
               </select>
             </div>
             <div class="col-md-2">
-              <select class="search-query" placeholder="Make">
+              <select #searchMake (change)="onMakeChanged(searchMake.value)" class="search-query" placeholder="Make">
                 <option value="">- Make -</option>
+                <option *ngFor="let m of makes | async" value="{{m.MakeName}}">{{m.MakeName}}</option>
               </select>
             </div>
             <div class="col-md-2">
-              <select class="search-query" placeholder="Model">
+              <select #searchModel (change)="onModelChanged(searchModel.value)" class="search-query" placeholder="Model">
                 <option value="">- Model -</option>
+                <option *ngFor="let m of models | async">{{m}}</option>
               </select>
             </div>
             <div class="col-md-4">
-              <select class="search-query" placeholder="Engine">
+              <select #searchEngine (change)="onEngineChanged(searchEngine.value)" class="search-query" placeholder="Engine">
                 <option value="">- Engine -</option>
+                <option *ngFor="let e of engines | async">{{e}}</option>
               </select>
             </div>
             <div class="col-md-2 text-right">
@@ -58,14 +62,10 @@
                   <option value="3">None</option>
                 </select>
               </div>
-              <div class="col-md-4">
+              <div #filterVendor (change)="onVendorChanged(filterVendor.value)" class="col-md-4">
                 <select class="search-query">
                   <option value="" selected>Filter by vendor</option>
-                </select>
-              </div>
-              <div class="hide col-md-4">
-                <select class="search-query">
-                  <option value="" selected>Filter by shipping</option>
+                  <option *ngFor="let v of vendors | async" value="{{v.key}}">{{v.label}}</option>
                 </select>
               </div>
             </div>
@@ -157,29 +157,32 @@
             </div>
           </div>
           <ul class="nav-pills nav-stacked product-list box-view row">
-            <li *ngFor="let product of products | async" class="col-md-1_5 col-sm-12 my-shop-animation product-item" id="product_$index">
-              <a [href]="product.viewItemURL">
+            <li *ngFor="let product of products | async" class="col-md-1_5 col-sm-12 my-shop-animation product-item">
+              <a [href]="product.viewItemURL" target="_blank">
                 <div class="shop-img {{product.vendor}}">
-                  <img [alt]="product.title" [src]="product.galleryURL">
+                  <img [alt]="product.title" [src]="product.galleryURL" />
                 </div>
               </a>
               <div class="col-lg-12 col-md-12 bt12-detail-shop">
                 <div class="bt-detail-shop">
-                  <a class="title" href="product.viewItemURL"> product.title </a>
-                  <p class="shop-price">product.price | currency:"$":2</p>
+                  <a [href]="product.viewItemURL" class="title" target="_blank"> {{product.title}} </a>
+                  <p class="shop-price">{{product.price | currency:'USD':true:'1.2-2'}}</p>
                 </div>
               </div>
               <div class="col-lg-6 bt-content-shop">
-                <a class="btn btn-lg btn-primary" target="_blank" href="product.viewItemURL">
+                <a [href]="product.viewItemURL" class="btn btn-lg btn-primary" target="_blank">
                   <i class="fa fa-shopping-cart"></i> BUY NOW
                 </a>
               </div>
               <div class="col-lg-6 bt-content-shop">
-                <a class="btn btn-lg btn-primary pull-right" href="/products/ product.vendor /product.seoURL/ product.itemId /"><i class="fa fa-list"></i>Details</a>
+                <a [routerLink]="['/product', product.vendor, product.seoURL, product.itemId]" class="btn btn-lg btn-primary pull-right">
+                  <i class="fa fa-list"></i> DETAILS
+                </a>
               </div>
               <div class="clear"></div>
             </li>
           </ul>
+<!--
           <ul class="nav-pills nav-stacked product-list list-view hide">
             <li class="list-view-header">
               <div class="row">
@@ -203,40 +206,44 @@
                 </div>
               </div>
             </li>
-            <li dir-paginate="product in productsList.products | itemsPerPage: productsList.perPage" total-items="productsList.productsCount" class="my-shop-animation">
+            <li *ngFor="let product of products | async" total-items="productsList.productsCount" class="my-shop-animation">
               <div class="row">
                 <div class="col-lg-2 col-md-3">
-                  <a href="product.viewItemURL">
+                  <a [href]="product.viewItemURL" target="_blank">
                     <div class="shop-img">
-                      <img ng-src="product.galleryURL" alt="product.title" />
+                      <img [alt]="product.title" [src]="product.galleryURL" />
                     </div>
                   </a>
                 </div>
                 <div class="col-lg-2 col-md-2">
                   <p class="vendor-icon">
-                    <span class="vendor-product.vendor"></span>
+                    <span class="vendor-product {{product.vendor}}"></span>
                   </p>
                 </div>
                 <div class="col-lg-4 col-md-3 bt12-detail-shop">
                   <div class="bt-detail-shop">
-                    <a class="title" href="product.viewItemURL"> product.title </a>
-                    <p class="">product.subtitle</p>
+                    <a [href]="product.viewItemURL" class="title" target="_blank"> {{product.title}} </a>
+                    <p> {{product.subtitle}} </p>
                   </div>
                 </div>
                 <div class="col-lg-1 col-md-1">
                   <p class="shop-price">
-                    <span ng-if="product.shippingInfo.shippingType" class="shipping">product.shippingInfo.shippingType</span>
+                    <span *ngIf="product.shippingInfo.shippingType" class="shipping">{{product.shippingInfo.shippingType}}</span>
                   </p>
                 </div>
                 <div class="col-lg-1 col-md-1">
                   <p class="shop-price">
-                    <span class="price-small">product.price | currency:"$":2</span>
+                    <span class="price-small">{{product.price | currency:'USD':true:'1.2-2'}}</span>
                   </p>
                 </div>
                 <div class="col-lg-2 col-md-2">
                   <div class="bt-content-actions">
-                    <a class="btn btn-lg btn-primary" target="_blank" href="product.viewItemURL"><i class="fa fa-shopping-cart"></i> BUY NOW</a><br/>
-                    <a class="btn btn-lg btn-primary" href="/products/ product.vendor /product.seoURL/ product.itemId /"><i class="fa fa-list"></i> Details</a>
+                    <a [href]="product.viewItemURL" class="btn btn-lg btn-primary" target="_blank"><i class="fa fa-shopping-cart">
+                      </i> BUY NOW
+                    </a><br/>
+                    <a [routerLink]="['/product', product.vendor, product.seoURL, product.itemId]" class="btn btn-lg btn-primary">
+                      <i class="fa fa-list"></i> DETAILS
+                    </a>
                   </div>
                 </div>
               </div>
@@ -244,34 +251,8 @@
           </ul>
         </div>
       </div>
-
-      <!--Pagination-->
-      <div class="store-pagination row">
-        <div ng-if="productsList.numberOfPages > 1 && !productsList.searching">
-          <div class="col-md-6">
-            <p class="number-page">
-              Showing 1 to of productsList.productsCount products
-            </p>
-          </div>
-          <div class="col-md-6 store-down-bottom">
-            <ul>
-              <li>
-                <button class="btn btn-lg btn-primary" ng-disabled="productsList.page == 1" ng-click="productsList.pageChanged(productsList.page-1)">
-                  Previous
-                </button>
-              </li>
-              <li>
-                <p class="number-page">productsList.page / productsList.numberOfPages</p>
-              </li>
-              <li>
-                <button class="btn btn-lg btn-primary" ng-disabled="productsList.page >= productsList.productsCount/productsList.perPage" ng-click="productsList.pageChanged(productsList.page+1)">
-                  Next
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+-->
+      <pagination-controls class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
     </div>
   </div>
 </div>

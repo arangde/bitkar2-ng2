@@ -6,7 +6,7 @@ import { Match } from 'meteor/check';
 import logger from 'winston';
 import * as _ from 'underscore';
 import { getVendorKey } from '../../../both/collections/vendors.collection';
-import { getSEOUrl, replacePropertyKey, removeHeadTags, getValueOfKey } from './utils';
+import { getSEOUrl, replacePropertyKey, removeHeadTags, getValueOfKey } from '../../../both/methods/utils';
 
 const ebaySettings = Meteor.settings['ebay'];
 

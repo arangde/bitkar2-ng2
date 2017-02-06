@@ -4,7 +4,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { getVendorKey, getVendorName } from '../../../both/collections/vendors.collection';
-import { getSEOUrl } from './utils';
+import { getSEOUrl } from '../../../both/methods/utils';
 import { CJFeeds, PJFeeds } from '../collections/localfeeds.collection';
 
 class LocalFeedApi {

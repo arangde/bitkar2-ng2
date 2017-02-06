@@ -2,17 +2,17 @@ import { Meteor } from 'meteor/meteor';
 import { Engines } from '../../../both/collections/engines.collection';
 import { Vehicles } from '../../../both/collections/vehicles.collection';
 
-Meteor.publish('engines', function(options, filter) {
+Meteor.publish('engines', function(options) {
   let selector = {};
 
-  if(filter.year) {
-    selector["Year"] = filter.year;
+  if(options.year) {
+    selector["Year"] = options.year;
   }
-  if(filter.make) {
-    selector["Make"] = filter.make;
+  if(options.make) {
+    selector["Make"] = options.make;
   }
-  if(filter.model) {
-    selector["Model"] = filter.model;
+  if(options.model) {
+    selector["Model"] = options.model;
   }
 
   const engineIds: Array<any> = [];
@@ -24,7 +24,7 @@ Meteor.publish('engines', function(options, filter) {
   });
 
   if(engineIds.length) {
-    return Engines.collection.find({"EngineLegacyID": {"$in": engineIds}});
+    return Engines.find({"EngineLegacyID": {"$in": engineIds}});
   }
   else {
     this.ready();

@@ -7,9 +7,10 @@ Meteor.publish('vehicles', function(options) {
   if(options.year) {
     selector["Year"] = options.year;
   }
-  if(options.legacyVehicleID) {
-    selector["LegacyVehicleID"] = options.legacyVehicleID;
+  if(options.make) {
+    selector["Make"] = options.make;
   }
+  console.log(selector);
 
-  return Vehicles.collection.find(selector);
+  return Vehicles.find(selector);
 });
