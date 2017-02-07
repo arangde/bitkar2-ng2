@@ -77,7 +77,12 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   curVideoPage: Subject<string> = new Subject<string>();
   baseVideoSearch: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   videosSize: number = 6;
-  videosCount: number = 0;
+  videosCountInfo: {
+    pageNav?: boolean,
+    total: number,
+    prevPage?: any,
+    nextPage?: any
+  };
 
   autorunSub: Subscription;
   brands: Observable<Brand[]>;
@@ -116,6 +121,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       years.push(i);
     }
     this.years = years;
+
+    this.videosCountInfo = {total: 0};
   }
 
   ngOnInit() {
@@ -506,7 +513,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
             videosCount += parseInt(itemCount.totalResults);
           });
           if(videosCount > 1000000) videosCount = 1000000;
-          this.videosCount = videosCount;
+          this.videosCountInfo = {total: videosCount};
         });
       }
       else {
@@ -529,9 +536,14 @@ export class ProductsListComponent implements OnInit, OnDestroy {
           const videosCountInfo = VideoCounts.collection.findOne({});
           if(videosCountInfo) {
             videosCount = videosCountInfo.totalResults;
+            if (videosCount > 1000000) videosCount = 1000000;
+            this.videosCountInfo = {
+              pageNav: true,
+              total: videosCount,
+              prevPage: videosCountInfo.prevPageToken,
+              nextPage: videosCountInfo.nextPageToken
+            };
           }
-          if(videosCount > 1000000) videosCount = 1000000;
-          this.videosCount = videosCount;
         });
       }
     });

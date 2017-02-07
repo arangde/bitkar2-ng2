@@ -109,31 +109,31 @@
             <div class="col-sm-7">
               <div class="search-notify">
                 <p class="info">
-                  <span *ngIf="videosCount >= 1000000">Over </span>
-                  <b id="videos_counter" countUp="{useEasing: false}" [startVal]="0" [endVal]="videosCount" [reanimateOnClick]="false"></b> Auto Parts Videos Found
+                  <span *ngIf="videosCountInfo.total >= 1000000">Over </span>
+                  <b id="videos_counter" countUp="{useEasing: false}" [startVal]="0" [endVal]="videosCountInfo.total" [reanimateOnClick]="false"></b> Auto Parts Videos Found
                 </p>
               </div>
             </div>
           </div>
           <ul class="row nav-pills nav-stacked product-list video-list">
-            <li class="col-md-2 col-sm-12 my-shop-animation product-item video-item">
-              <a href="" target="_blank">
+            <li *ngFor="let video of videos | async" class="col-md-2 col-sm-12 my-shop-animation product-item video-item">
+              <a [href]="video.url" target="_blank">
                 <div class="shop-img video-img">
-                  <img alt="video.title" src=""/>
+                  <img [alt]="video.title" [src]="video.thumbnail"/>
                 </div>
               </a>
               <div class="col-lg-12 col-md-12 bt12-detail-shop">
                 <div class="bt-detail-shop">
-                  video.title
+                  {{video.title}}
                 </div>
               </div>
             </li>
           </ul>
-          <div>
+          <div *ngIf="videosCountInfo && videosCountInfo.pageNav && videosCountInfo.total > 1">
             <div class="row">
               <div class="col-md-12 store-down-bottom">
-                <button class="btn btn-lg btn-primary" >Previous</button>
-                <button class="btn btn-lg btn-primary" >Next</button>
+                <button class="btn btn-lg btn-primary" (disabled)="videosCountInfo.prevPage == null" (click)="onVideoPageChanged(videosCountInfo.prevPage)">Previous</button>
+                <button class="btn btn-lg btn-primary" (disabled)="videosCountInfo.nextPage == null" (click)="onVideoPageChanged(videosCountInfo.nextPage)">Next</button>
               </div>
             </div>
           </div>
