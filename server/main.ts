@@ -5,7 +5,6 @@ import './imports/publications/users';
 import '../both/methods/parties.methods';
 import './imports/publications/images';
 
-import './imports/publications/vendors';
 import './imports/publications/baseitems';
 import './imports/publications/baseitemcounts';
 import './imports/publications/basevideos';
@@ -22,6 +21,10 @@ import './imports/publications/products';
 import './imports/publications/sitemaps';
 import './imports/publications/videos';
 import './imports/publications/videocounts';
+import './imports/publications/vendors';
+
+import './imports/methods/products.methods';
+import './imports/methods/videos.methods';
 
 import { AccessLogs } from './imports/collections/accesslogs.collection';
 

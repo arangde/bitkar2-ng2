@@ -3,10 +3,11 @@
  */
 import { Meteor } from 'meteor/meteor';
 import { Match } from 'meteor/check';
+import logger from 'winston';
 import * as YoutubeSearch from "youtube-search";
 import * as _ from 'underscore';
-import { Videos } from '../collections/videos.collection';
-import { VideoCounts } from '../collections/videocounts.collection';
+import { Videos } from '../../../both/collections/videos.collection';
+import { VideoCounts } from '../../../both/collections/videocounts.collection';
 
 if(Meteor.isServer) {
 
@@ -45,7 +46,7 @@ if(Meteor.isServer) {
       }
       console.log('searchOptions', searchOptions);
 
-      YoutubeSearch(q, searchOptions, (err, items, pageInfo) => {
+      YoutubeSearch(q, searchOptions, Meteor.bindEnvironment((err, items, pageInfo) => {
         Videos.collection.remove({"sessionId": options.sessionId});
         VideoCounts.collection.remove({"sessionId": options.sessionId});
 
@@ -70,7 +71,7 @@ if(Meteor.isServer) {
               const video = {
                 videoId: item.id,
                 title: item.title,
-                thumbnail: item.thumbnails['default'][0]['url'],
+                thumbnail: item.thumbnails['default']['url'],
                 url: "https://youtu.be/" + item.id,
                 sessionId: options.sessionId,
                 lastActivity: now.getTime(),
@@ -82,7 +83,7 @@ if(Meteor.isServer) {
             console.error("Youtube could not search with keywords");
           }
         }
-      });
+      }));
     }
   });
 }

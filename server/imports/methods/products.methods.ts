@@ -4,14 +4,14 @@
 import { Meteor } from 'meteor/meteor';
 import logger from 'winston';
 import * as _ from 'underscore';
-import { Products } from '../collections/products.collection';
-import { ProductInfo } from '../collections/productinfo.collection';
-import { GlobalParts } from '../collections/globalparts.collection';
-import { ProductCounts } from '../collections/productcounts.collection';
-import { getVendorKey, getVendorFeed } from '../collections/vendors.collection';
-import AmazonApi from '../../server/imports/fixtures/amazon.api';
-import EbayApi from '../../server/imports/fixtures/ebay.api';
-import LocalFeedApi from '../../server/imports/fixtures/localfeed.api';
+import { Products } from '../../../both/collections/products.collection';
+import { ProductInfo } from '../../../both/collections/productinfo.collection';
+import { GlobalParts } from '../../../both/collections/globalparts.collection';
+import { ProductCounts } from '../../../both/collections/productcounts.collection';
+import { getVendorKey, getVendorFeed } from '../../../both/collections/vendors.collection';
+import AmazonApi from '../fixtures/amazon.api';
+import EbayApi from '../fixtures/ebay.api';
+import LocalFeedApi from '../fixtures/localfeed.api';
 
 if(Meteor.isServer) {
   const apiPerPage = Meteor.settings['public']['apiPerPage'];
@@ -31,7 +31,7 @@ if(Meteor.isServer) {
 
             formattedProduct['sessionId'] = options.sessionId;
             formattedProduct['lastActivity'] = now.getTime();
-            Products.insert(formattedProduct);
+            Products.collection.insert(formattedProduct);
           });
 
           resolve(amazonResult.total);
@@ -105,7 +105,7 @@ if(Meteor.isServer) {
 
                     formattedProduct['sessionId'] = options.sessionId;
                     formattedProduct['lastActivity'] = now.getTime();
-                    Products.insert(formattedProduct);
+                    Products.collection.insert(formattedProduct);
                   });
                 }
                 resolve('ebay');
@@ -223,7 +223,7 @@ if(Meteor.isServer) {
                             // BaseItems.insert(baseItem);
 
                             formattedProduct['sessionId'] = options.sessionId;
-                            Products.insert(formattedProduct);
+                            Products.collection.insert(formattedProduct);
                           });
                         }
                         resolveCJ('local cj');
@@ -266,7 +266,7 @@ if(Meteor.isServer) {
                             // BaseItems.insert(baseItem);
 
                             formattedProduct['sessionId'] = options.sessionId;
-                            Products.insert(formattedProduct);
+                            Products.collection.insert(formattedProduct);
                           });
                         }
                         resolvePJ('local pj');

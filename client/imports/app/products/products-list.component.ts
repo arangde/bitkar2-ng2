@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, Subject } from "rxjs";
+import { Observable, Subscription, Subject, BehaviorSubject } from "rxjs";
 import { PaginationService } from "ng2-pagination";
 import { MeteorObservable } from "meteor-rxjs";
 import { Counts } from "meteor/tmeasday:publish-counts";
@@ -47,7 +47,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   sessionId: string;
   searching: boolean = false;
   searchFailed: boolean = false;
-  baseSearch: boolean = true;
   showCounter: boolean = true;
   baseVideoSearch: boolean = true;
   searchText: string = '';
@@ -63,6 +62,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   vendor: string = '';
 
   curPage: Subject<number> = new Subject<number>();
+  curCategory: Subject<string> = new Subject<string>();
+  curPriceSort: Subject<string> = new Subject<string>();
+  curVendor: Subject<string> = new Subject<string>();
+  baseSearch: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   pageSize: number = 20; // Meteor.settings['public']['pageSize'];
   
   optionsSub: Subscription;
@@ -101,21 +104,23 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.optionsSub = Observable.combineLatest(
       this.curPage,
       this.baseSearch,
-      this.categoryId,
-      this.priceSort,
-      this.vendor
-    ).subscribe(([curPage, baseSearch, categoryId, priceSort, vendor]) => {
+      this.curCategory,
+      this.curPriceSort,
+      this.curVendor
+    ).subscribe(([curPage, baseSearch, curCategory, curPriceSort, curVendor]) => {
+      console.log(curPage, baseSearch, curCategory, curPriceSort, curVendor);
       if(baseSearch) {
         if (this.baseItemsSub) {
           this.baseItemsSub.unsubscribe();
         }
 
         const filter = {
-          categoryId: categoryId,
-          vendor: vendor,
+          categoryId: curCategory,
+          vendor: curVendor,
+          limit: this.pageSize
         };
 
-        this.baseItemsSub = MeteorObservable.subscribe('baseitems', filter, this.pageSize).subscribe(() => {
+        this.baseItemsSub = MeteorObservable.subscribe('baseitems', filter).subscribe(() => {
           this.products = BaseItems.find({}).zone();
         });
       }
@@ -128,11 +133,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
         const options: Options = {
           limit: this.pageSize,
-          skip: ((curPage as number) - 1) * (pageSize as number)
+          skip: ((curPage as number) - 1) * this.pageSize
         };
         const filter = {
-          priceSort: priceSort,
-          vendorFilter: vendor,
+          priceSort: curPriceSort,
+          vendorFilter: curVendor,
           page: curPage as number,
           sessionId: this.sessionId
         };
@@ -151,6 +156,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     });
 
     this.curPage.next(1);
+    this.baseSearch.next(true);
+    this.curCategory.next(this.categoryId);
+    this.curPriceSort.next(this.priceSort);
+    this.curVendor.next(this.vendor);
 
     this.autorunSub = MeteorObservable.autorun().subscribe(() => {
       this.productsCount = Counts.get('numberOfProducts');
@@ -187,10 +196,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.optionsSub.unsubscribe();
     this.brandsSub.unsubscribe();
     this.categoriesSub.unsubscribe();
+    this.baseItemsSub.unsubscribe();
     this.productsSub.unsubscribe();
-    this.optionsSub.unsubscribe();
     this.autorunSub.unsubscribe();
     this.makesSub.unsubscribe();
     this.vehiclesSub.unsubscribe();
@@ -198,10 +208,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.vendorsSub.unsubscribe();
   }
 
-  // search(value: string): void {
-  //   this.curPage.next(1);
-  // }
-  //
   // onPageChanged(page: number): void {
   //   this.curPage.next(page);
   // }
@@ -215,9 +221,15 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       this.categoryId = category.CategoryID;
       this.categoryName = category.CategoryName;
     }
+    else {
+      this.categoryId = '';
+      this.categoryName = '';
+    }
 
     document.querySelector("ul.category-filter>li.active").classList.remove("active");
     $event.target.classList.add("active");
+
+    this.curCategory.next(this.categoryId);
 
     this.getSearchText();
     this.search();
@@ -226,6 +238,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   onBrandChanged(brand, $event) {
     if(brand) {
       this.brandName = brand.BrandName;
+    }
+    else {
+      this.brandName = '';
     }
 
     document.querySelector("ul.brand-filter>li.active").classList.remove("active");
@@ -237,13 +252,11 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   onYearChanged(year: string): void {
     this.year = parseInt(year);
-
     this._updateVehicles();
   }
 
   onMakeChanged(make: string): void {
     this.make = make;
-
     this._updateVehicles();
   }
 
@@ -272,12 +285,14 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   onVendorChanged(vendor: string): void {
     this.vendor = vendor;
+    this.curVendor.next(vendor);
     this.search();
   }
 
   onPriceSortChanged(priceSort: string): void {
     this.priceSort = priceSort;
     this.curPage.next(1);
+    this.curPriceSort.next(priceSort);
     this._findProducts();
   }
 
@@ -332,7 +347,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   _findProducts(reload = true) {
-    this.baseSearch = false;
+    this.baseSearch.next(false);
     this.searching = true;
     this.searchFailed = false;
 
@@ -367,7 +382,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   _findLocal() {
     // analytics.track('shop', {search: 'All'});
 
-    this.baseSearch = true;
+    if(this.baseSearch.getValue() === false)
+      this.baseSearch.next(true);
   }
 
   _localVideoSearchable() {
@@ -397,7 +413,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       sessionId: this.sessionId,
     };
 
-    Meteor.call('findVideos', filters, options).subscribe((result) => {
+    MeteorObservable.call('findVideos', filters, options).subscribe((result) => {
         console.log('Response on find videos', result);
       }, (error) => {
         console.error('Error detected on find videos', error);

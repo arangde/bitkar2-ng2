@@ -1,10 +1,20 @@
 import { Meteor } from 'meteor/meteor';
 import { BaseItems } from '../../../both/collections/baseitems.collection';
 
-Meteor.publish('baseitems', function(filter, limit) {
+Meteor.publish('baseitems', function(filter) {
   const options = {
-    '$sort': {title: 1},
-    '$limit': limit,
+    'sort': {title: 1},
+    'limit': filter.limit,
   };
-  return BaseItems.find(filter, options);
+
+  const selector = {};
+  if(filter.categoryId) {
+    selector['categoryId'] = filter.categoryId;
+  }
+  if(filter.vendor) {
+    selector['vendor'] = filter.vendor;
+  }
+
+  console.log(selector, options);
+  return BaseItems.find(selector, options);
 });
