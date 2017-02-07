@@ -2,7 +2,7 @@ import { MongoObservable } from 'meteor-rxjs';
 
 import { BaseVideoCount } from '../models/basevideocount.model';
 
-export const BaseVideoCounts = new MongoObservable.Collection<BaseVideoCount>('basevideocounts');
+export const BaseVideoCounts = new MongoObservable.Collection<BaseVideoCount>('basevideoscount');
 
 function checkAvailable() {
   return true;

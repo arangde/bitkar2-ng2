@@ -4,8 +4,8 @@ import { BaseVideos } from '../../../both/collections/basevideos.collection';
 Meteor.publish('basevideos', (options) => {
   const selector = {};
 
-  if(options.vendorFilter)
-    selector['vendor'] = options.vendorFilter;
+  if(options.vendor)
+    selector['vendor'] = options.vendor;
   if(options.categoryId)
     selector['categoryId'] = options.categoryId;
 
@@ -18,11 +18,11 @@ Meteor.publish('basevideos', (options) => {
       videoIds.push(baseVideo.videoId);
       ids.push(baseVideo._id);
     }
-    if(videoIds.length == 6)
+    if(videoIds.length == options.limit)
       return false;
     else
       return true;
   });
 
-  return BaseVideos.collection.find({_id: {"$in": ids}}, {sort:{ publishedAt: -1 }});
+  return BaseVideos.find({_id: {"$in": ids}}, {sort:{ publishedAt: -1 }});
 });

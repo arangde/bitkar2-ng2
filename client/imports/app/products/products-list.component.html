@@ -109,8 +109,8 @@
             <div class="col-sm-7">
               <div class="search-notify">
                 <p class="info">
-                  <span >Over </span>
-                  <b id="videos_counter"></b> Auto Parts Videos Found
+                  <span *ngIf="videosCount >= 1000000">Over </span>
+                  <b id="videos_counter" countUp="{useEasing: false}" [startVal]="0" [endVal]="videosCount" [reanimateOnClick]="false"></b> Auto Parts Videos Found
                 </p>
               </div>
             </div>
@@ -147,7 +147,7 @@
             <div class="col-sm-5">
               <div class="search-notify">
                 <p class="info">
-                  <b countUp="{useEasing: false}" [startVal]="productsCountStart" [endVal]="productsCount" [reanimateOnClick]="false"></b> Parts Found
+                  <b countUp="{useEasing: false}" [startVal]="0" [endVal]="productsCount" [reanimateOnClick]="false"></b> Parts Found
                 </p>
               </div>
             </div>
