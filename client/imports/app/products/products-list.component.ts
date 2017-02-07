@@ -14,6 +14,7 @@ import { Categories } from "../../../../both/collections/categories.collection";
 import { Product } from "../../../../both/models/product.model";
 import { Products } from "../../../../both/collections/products.collection";
 import { BaseItems } from "../../../../both/collections/baseitems.collection";
+import { BaseItemCounts } from "../../../../both/collections/baseitemcounts.collection";
 import { Make } from "../../../../both/models/make.model";
 import { Makes } from "../../../../both/collections/makes.collection";
 import { Vehicle } from '../../../../both/models/vehicle.model';
@@ -66,8 +67,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   curPriceSort: Subject<string> = new Subject<string>();
   curVendor: Subject<string> = new Subject<string>();
   baseSearch: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  productsCountStart: number = 0;
   pageSize: number = 20; // Meteor.settings['public']['pageSize'];
-  
+
   optionsSub: Subscription;
   autorunSub: Subscription;
   brands: Observable<Brand[]>;
@@ -78,6 +80,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   productsSub: Subscription;
   productsCount: number = 0;
   baseItemsSub: Subscription;
+  baseItemCountsSub: Subscription;
   vehicles: Observable<Vehicle[]>;
   vehiclesSub: Subscription;
   makes: Observable<Make[]>;
@@ -122,6 +125,25 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
         this.baseItemsSub = MeteorObservable.subscribe('baseitems', filter).subscribe(() => {
           this.products = BaseItems.find({}).zone();
+        });
+
+        if (this.baseItemCountsSub) {
+          this.baseItemCountsSub.unsubscribe();
+        }
+
+        this.baseItemCountsSub = MeteorObservable.subscribe('baseitemcounts', filter).subscribe(() => {
+          let productsCount = 0;
+          const baseItemCounts = BaseItemCounts.collection.find({}).fetch();
+
+          baseItemCounts.forEach((itemCount) => {
+            if (itemCount.vendor == 'amazon') {
+              productsCount += parseInt(itemCount.total.totalPages) * 10;
+            }
+            else {
+              productsCount += parseInt(itemCount.total.totalEntries);
+            }
+          });
+          this.productsCount = productsCount;
         });
       }
       else {

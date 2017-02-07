@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { AgmCoreModule } from 'angular2-google-maps/core';
-
+// import * as CountUp from 'countup.js/dist/countUp.js';
+import { CountUpModule } from 'countup.js/dist/countUp.module';
 import { AppComponent } from "./app.component";
 import { routes } from './app.routes';
 import { SHARED_DECLARATIONS } from './shared';
@@ -25,7 +26,9 @@ let moduleDefinition = {
     Ng2PaginationModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAWoBdZHCNh5R-hB5S5ZZ2oeoYyfdDgniA'
-    })
+    }),
+    // CountUp,
+    CountUpModule
   ],
   declarations: [
     AppComponent,

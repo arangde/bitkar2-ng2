@@ -15,6 +15,5 @@ Meteor.publish('baseitems', function(filter) {
     selector['vendor'] = filter.vendor;
   }
 
-  console.log(selector, options);
   return BaseItems.find(selector, options);
 });

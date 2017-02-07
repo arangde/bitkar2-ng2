@@ -35,3 +35,4 @@ mobile-status-bar@1.0.13
 npm-container
 meteorhacks:async
 bmclain:ebay-api
+sebastianilves:angular-countup-js
